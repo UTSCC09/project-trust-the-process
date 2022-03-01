@@ -16,41 +16,41 @@ This web application will be built by using real time video streaming and comput
 
 ## Beta Version Features
 
-1. As a user, I would like to sign up, create a profile, and login to my account
+1. As a user, I would like to sign up, create a profile, and login to my account.
     * Implement user signup and login gRPC endpoints.
     * Create user profile and credentials MongoDB schema.
     * Create user signup, profile, and login landing page.
-2. As a user, I would like to have my workouts classified and captured using video recognition
+2. As a user, I would like to have my workouts classified and captured using video recognition.
     * Setup video recognition to analyze workout video feeds and detect different types of workouts.
     * Integrate the application with third-party APIs such as ML-Kit and Tensorflow.
     * Implement gRPC endpoints to send the captured exercise to the third-party APIs and retrieve the resulting classification. 
     * Show the type of current exercise to the user in real-time.
     * Display the count of each exercise to the user in real-time.
-3. As a user, I would like to see a personal fitness report after each of my workouts
-    * Create a workout MongoDB schema and fitness report MongoDB schema
+3. As a user, I would like to see a personal fitness report after each of my workouts.
+    * Create a workout MongoDB schema and fitness report MongoDB schema.
     * Implement gRPC endpoints to update and retrieve a user’s workout history, and generate a fitness report based on a user’s workout history.
     * Create a page to view fitness reports.
-4. As a user, I would like to create a personal workout playlist
+4. As a user, I would like to create a personal workout playlist.
     * Implement gRPC endpoints to edit and save a new set of workout plans, and to retrieve the playlist.
     * Create a MongoDB schema for a user's set of workout plans.
-    * Create a page to display the playlist, and allow user to select a particular playlist 
+    * Create a page to display the playlist, and allow user to select a particular playlist.
     * When a particular playlist is selected for a workout, then guide the user to complete the playlist. The application will show, in words, what type of exercise needs to be done, the number of repetitions, and what will come up next. 
 
 ## Final Version Features
 
-1. As a user, I would like to receive a weekly email detailing my daily (summarized) fitness report
+1. As a user, I would like to receive a weekly email detailing my daily (summarized) fitness report.
     * Setup nodemailer module to send automated emails to users.
     * Implement an HTML template email to style the emails with CSS.
-2. As a user, I would like to know how long I have been working out in a session 
+2. As a user, I would like to know how long I have been working out in a session .
     * Implement a timer and show it directly to the user.
     * Record the total active and passive time. Active time is recorded whenever a user performs an exercise, and passive time is recorded whenever a user does not perform any exercise.
     * Include the recorded time in each fitness report.
-3. As a user I would like to see a calendar view of all my previous workouts
-    * Create a workout report calendar page
-4. As a user, I would like to navigate and explore the web application with an elegant UI
+3. As a user I would like to see a calendar view of all my previous workouts.
+    * Create a workout report calendar page.
+4. As a user, I would like to navigate and explore the web application with an elegant UI.
     * Create a home landing page.
     * Create a navigation bar to access different pages.
-5. As a user, I would like to logout of my account
+5. As a user, I would like to logout of my account.
     * Create a logout button.
     * Implement gRPC endpoint to log out.
 
