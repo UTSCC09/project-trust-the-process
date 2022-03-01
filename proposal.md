@@ -57,8 +57,11 @@ This web application will be built by using real time video streaming and comput
 ## Technology Stack
 
 **Frontend:** React, Material UI
+
 **Backend:** Node.js, Express.js, gRPC
+
 **Video Recognition:** ML-Kit, Tensorflow
+
 **Database:** MongoDB
 
 ## Technical Challenges
