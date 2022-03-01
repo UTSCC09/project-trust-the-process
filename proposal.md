@@ -1,4 +1,4 @@
-# CSCC09 Project Proposal
+# BurnYourCalories
 
 ## Team Members
 
