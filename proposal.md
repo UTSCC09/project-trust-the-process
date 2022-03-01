@@ -56,7 +56,7 @@ This web application will be built by using real time video streaming and comput
 
 ## Technology Stack
 
-**Frontend:** React, Material UI
+**Frontend:** React, Material UI, HTML, CSS
 
 **Backend:** Node.js, Express.js, gRPC
 
