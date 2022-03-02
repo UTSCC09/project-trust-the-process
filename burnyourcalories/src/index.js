@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
-import Shoppies from './pages/shoppies'
+import Shoppies from './pages/index'
 
 ReactDOM.render(
   <React.StrictMode>

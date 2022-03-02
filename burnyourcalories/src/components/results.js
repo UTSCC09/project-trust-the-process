@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 
 import { AddCircleOutline } from '@material-ui/icons'
-import Loading from '../images/loading.gif'
+import Loading from '../assets/loading.gif'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
