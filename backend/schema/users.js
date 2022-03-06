@@ -2,7 +2,8 @@ const { gql } = require('apollo-server');
 
 const User = gql`
   type User {
-    name: String!
+    firstName: String!
+    lastName: String
     email: String!
     password: String!
   }
@@ -18,7 +19,7 @@ const User = gql`
   union UserRegisterResult = UserRegisterSuccess | UserRegisterFail
 
   type Mutation {
-    registerUser(name: String!, email: String!, password: String!): UserRegisterResult!
+    registerUser(firstName: String!, lastName: String!, email: String!, password: String!): UserRegisterResult!
   }
   type Query {
     _: String!

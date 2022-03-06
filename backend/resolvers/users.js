@@ -3,8 +3,16 @@ const bcrypt = require("bcrypt");
 
 module.exports = {
     Mutation: {
-        registerUser: async (_, {name, email, password}) => {
+        registerUser: async (_, {firstName, lastName, email, password}) => {
             try {
+                if(!firstName || !email || !password) {
+                    return {
+                        __typename: "UserRegisterFail",
+                        message: `At least one of firstName, email, or password is missing`,
+                        statusCode: 401
+                    }
+                }
+
                 const user = await User.findOne({email});
                 if(user) {
                     return {
@@ -15,14 +23,15 @@ module.exports = {
                 }
 
                 const newUser = new User({
-                    name,
+                    firstName,
+                    lastName,
                     email
                 });
 
                 const salt = await bcrypt.genSalt(10);
                 newUser.password = await bcrypt.hash(password, salt);
                 
-                const savedUser = await newUser.save();
+                await newUser.save();
                 return {
                     __typename: "UserRegisterSuccess",
                     user: newUser,
