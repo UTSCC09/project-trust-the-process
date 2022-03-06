@@ -1,12 +1,5 @@
-const { gql } = require("apollo-server");
+const User = require('./users')
 
-const typeDefs = gql`
-    type Query {
-        me: User
-    }
-
-    type User {
-        username: String!
-    }
-`;
-module.exports = typeDefs;
+module.exports = [
+  User
+]
