@@ -12,18 +12,29 @@ const User = gql`
     user: User!
     statusCode: Int!
   }
-  type UserRegisterFail {
+
+  type UserLoginSuccess {
+    user: User!
+    token: String!
+    statusCode: Int!
+  }
+  
+  type UserFail {
     message: String!
     statusCode: Int!
   }
-  union UserRegisterResult = UserRegisterSuccess | UserRegisterFail
+
+  union UserRegisterResult = UserRegisterSuccess | UserFail
+  union UserLoginResult = UserLoginSuccess | UserFail
 
   type Mutation {
     registerUser(firstName: String!, lastName: String!, email: String!, password: String!): UserRegisterResult!
+    loginUser(email: String!, password: String!): UserLoginResult!
   }
   type Query {
     _: String!
   }
+
   schema {
     query: Query
     mutation: Mutation
