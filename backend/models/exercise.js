@@ -1,0 +1,23 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const exerciseSchema = new Schema({
+    reportID: {
+        type: String,
+        required: true
+    },
+    exerciseName: {
+        type: String,
+        required: true
+    },
+    repetitions: {
+        type: Number,
+        required: true,
+    },
+    weight: {
+        type: Number,
+        required: false
+    }
+});
+
+module.exports = Exercise = mongoose.model('Exercise', exerciseSchema);
