@@ -11,11 +11,11 @@ import {
 	MenuItem,
 	InputLabel,
 	Select,
-} from '@material-ui/core'
+} from '@mui/material'
 
-import { AddCircleOutline } from '@material-ui/icons'
-import Loading from '../assets/loading.gif'
-import { makeStyles } from '@material-ui/core/styles'
+import { AddCircleOutline } from '@mui/icons-material'
+import Loading from '../../assets/loading.gif'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
 	title: {

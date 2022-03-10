@@ -6,10 +6,10 @@ import {
 	Typography,
 	IconButton,
 	Link,
-} from '@material-ui/core'
+} from '@mui/material'
 
-import { RemoveCircleOutline } from '@material-ui/icons'
-import { makeStyles } from '@material-ui/core/styles'
+import { RemoveCircleOutline } from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
 	title: {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import SearchBox from '../components/searchbox'
-import Nominations from '../components/nominations'
-import Results from '../components/results'
+import { makeStyles } from '@mui/styles'
+import SearchBox from '../components/example/searchbox'
+import Nominations from '../components/example/nominations'
+import Results from '../components/example/results'
 import {
 	Container,
 	Box,
@@ -13,7 +13,7 @@ import {
 	Fade,
 	Snackbar,
 	SnackbarContent,
-} from '@material-ui/core'
+} from '@mui/material'
 
 const useStyles = makeStyles((theme) => ({
 	root: {

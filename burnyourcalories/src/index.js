@@ -2,19 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import theme from './theme'
-import Shoppies from './pages/index'
+import { ThemeProvider } from '@mui/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from './theme';
+import Shoppies from './pages/index';
+import Welcome from './pages/welcome';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Router>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Shoppies />
+      <Routes>
+        {/* Example path */}
+        <Route exact path="/example" element={<Shoppies />} />
+        {/* Sign-in/up page */}
+        <Route exact path="/welcome" element={<Welcome view={'signin'}/>} />
+      </Routes>
     </ThemeProvider>
-  </React.StrictMode>,
+  </Router>
+  ,
   document.getElementById('root')
 );
 
