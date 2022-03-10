@@ -1,8 +1,12 @@
 const { gql } = require('apollo-server');
 
 const Exercise = gql`
+  type AddExercise {
+    exerciseId: String!
+    statusCode: Int!
+  }
+
   type Exercise {
-    reportID: String!
     exerciseName: String!
     repetitions: Int!
     weight: Int!
@@ -14,10 +18,12 @@ const Exercise = gql`
     statusCode: Int!
   }
 
-  union AddExerciseResult = Exercise | ExerciseFail
+  union AddExerciseResult = AddExercise | ExerciseFail
+  union GetExerciseResult = Exercise | ExerciseFail
 
   type Mutation {
     addExercise(reportId: String!, exerciseName: String!, repetitions: Int!, weight: Int!): AddExerciseResult!
+    getExercise(exerciseId: String!): GetExerciseResult!
   }
 
   type Query {
