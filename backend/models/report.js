@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reportSchema = new Schema({
-    userID: {
+    userId: {
         type: String,
         required: true
     },
@@ -11,15 +11,15 @@ const reportSchema = new Schema({
         default: []
     },
     date: {
-        type: Date,
+        type: String,
         required: true
     },
     startTime: {
-        type: Number,
+        type: String,
         required: true
     },
     endTime: {
-        type: Number,
+        type: String,
         default: 0
     },
 });
