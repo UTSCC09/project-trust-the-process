@@ -32,7 +32,7 @@ ReactDOM.render(
           {/* Example path */}
           <Route exact path="/example" element={<Shoppies />} />
           {/* Sign-in/up page */}
-          <Route exact path="/welcome" element={<Welcome view={'signin'} client={client}/>} />
+          <Route exact path="/welcome" element={<Welcome view={'signup'} client={client}/>} />
         </Routes>
       </ThemeProvider>
     </ApolloProvider>

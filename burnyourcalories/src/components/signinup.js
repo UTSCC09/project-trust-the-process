@@ -167,7 +167,7 @@ export default function SignInUp({
                   id="firstName"
                   label="First Name"
                   name="firstName"
-                  // autoComplete="username"
+                  autoFocus
                 />
                 <TextField
                   margin="normal"
@@ -177,7 +177,6 @@ export default function SignInUp({
                   id="lastName"
                   label="Last Name"
                   name="lastName"
-                  // autoComplete="username"
                 /> 
               </>
               : null}
@@ -189,7 +188,6 @@ export default function SignInUp({
                 id="email"
                 label="Email"
                 name="email"
-                // autoComplete="username"
               />
               <TextField
                 margin="normal"
