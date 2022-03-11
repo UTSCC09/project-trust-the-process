@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Paper, InputBase, IconButton } from '@mui/material'
 import { Search, LockOutlined } from '@mui/icons-material'
 import { makeStyles } from '@mui/styles'
@@ -17,6 +17,12 @@ import {
     Copy
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
+import { 
+  ApolloClient, 
+  HttpLink, 
+  useMutation, 
+  gql 
+} from '@apollo/client'
 
 const theme = createTheme();
 
@@ -30,27 +36,108 @@ const useStyles = makeStyles((theme) => ({
     
 }))
 
+const SIGN_IN = gql`
+  mutation($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+       ... on UserFail {
+        message,
+        statusCode
+      }
+      ... on UserLoginSuccess {
+        user {
+          firstName,
+          lastName,
+          email,
+          password
+        }
+        token
+        statusCode
+      }
+    }
+  }
+`
+
+const SIGN_UP = gql`
+  mutation($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    registerUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+      ... on UserFail {
+        message,
+        statusCode
+      }
+      ... on UserRegisterSuccess {
+        user {
+          firstName,
+          lastName,
+          email,
+          password
+        }
+        statusCode
+      }
+    }
+  }
+`
+
 export default function SignInUp({
     view,
+    client,
     ...props
 }) {
 	const classes = useStyles(props)
 
-	const [searchTerm, setSearchTerm] = useState('')
-    const [loading, setLoading] = useState(false)
+  const [load, setLoad] = useState(false)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setLoading(true);
-        const data = new FormData(e.currentTarget);
+  const [signIn] = useMutation(SIGN_IN, {
+    onCompleted: (data) => {
+      console.log(data)
+      setTimeout(() => {
+        setLoad(false);
+      }, 1500)
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
 
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        })
-        setTimeout(() => {
-            setLoading(false);
-        }, 1500);
+  const [signUp] = useMutation(SIGN_UP, {
+    onCompleted: (data) => {
+      console.log(data)
+      setTimeout(() => {
+        setLoad(false);
+      }, 1500)
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  useEffect(() => {
+    if (firstName && lastName && email && password && view == 'signup'){
+      signUp({ variables: { firstName, lastName, email, password } })
+    }
+  }, [firstName, lastName, email, password])
+
+  useEffect(() => {
+    if (email && password && view == 'signin') {
+      signIn({ variables: { email, password } })
+    }
+  }, [email, password])
+
+
+
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      setLoad(true);
+      const data = new FormData(e.currentTarget);
+      setEmail(data.get('email'))
+      setPassword(data.get('password'))
+      if (view == 'signup') {
+        setFirstName(data.get('firstName'))
+        setLastName(data.get('lastName'))
+      }
     }
 
 	return (
@@ -70,16 +157,39 @@ export default function SignInUp({
               {view == 'signin' ? 'Sign in' : 'Sign up'}
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate>
+              {view == 'signup' ? 
+              <>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  variant='outlined'
+                  id="firstName"
+                  label="First Name"
+                  name="firstName"
+                  // autoComplete="username"
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  variant='outlined'
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  // autoComplete="username"
+                /> 
+              </>
+              : null}
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 variant='outlined'
-                id="username"
-                label="Username"
-                name="username"
+                id="email"
+                label="Email"
+                name="email"
                 // autoComplete="username"
-                autoFocus
               />
               <TextField
                 margin="normal"
@@ -96,7 +206,7 @@ export default function SignInUp({
                 type="submit"
                 fullWidth
                 variant="contained"
-                loading={loading}
+                loading={load}
               >
                 {view == 'signin' ? 'Sign In' : 'Sign Up'}
               </LoadingButton>
