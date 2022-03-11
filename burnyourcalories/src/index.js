@@ -31,8 +31,10 @@ ReactDOM.render(
         <Routes>
           {/* Example path */}
           <Route exact path="/example" element={<Shoppies />} />
-          {/* Sign-in/up page */}
-          <Route exact path="/welcome" element={<Welcome view={'signup'} client={client}/>} />
+          {/* Sign-up page */}
+          <Route exact path="/signup" element={<Welcome view={'signup'} client={client}/>} />
+          {/* Sign-in page */}
+          <Route exact path="/signin" element={<Welcome view={'signin'} client={client}/>} />
         </Routes>
       </ThemeProvider>
     </ApolloProvider>
