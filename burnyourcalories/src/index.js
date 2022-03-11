@@ -15,6 +15,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import Shoppies from './pages/index';
 import Welcome from './pages/welcome';
+import Workout from './pages/workout';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -35,6 +36,8 @@ ReactDOM.render(
           <Route exact path="/signup" element={<Welcome view={'signup'} client={client}/>} />
           {/* Sign-in page */}
           <Route exact path="/signin" element={<Welcome view={'signin'} client={client}/>} />
+          {/* Video page */}
+          <Route exact path="/workout" element={<Workout client={client}/>} />
         </Routes>
       </ThemeProvider>
     </ApolloProvider>
