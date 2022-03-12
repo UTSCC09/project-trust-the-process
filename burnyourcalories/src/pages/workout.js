@@ -5,6 +5,7 @@ import SignInUp from '../components/signinup'
 import {
 	Container,
 } from '@mui/material'
+import Video from '../components/video'
 
 const theme = createTheme();
 
@@ -34,6 +35,7 @@ export default function Workout({
 	return (
         <Container maxWidth='xs' className={classes.root}>
             {/* <SignInUp view={view}/> ADD COMPONENT SIMILAR TO THIS*/}
+			<Video view={view}/>
         </Container>
 	)
 }
