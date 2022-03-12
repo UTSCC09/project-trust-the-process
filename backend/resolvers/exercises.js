@@ -3,12 +3,12 @@ const Report = require("../models/report");
 
 module.exports = {
     Mutation: {
-        addExercise: async (_, {reportId, exerciseName, repetitions, weight}) => {
+        addExercise: async (_, {reportId, exerciseName, duration, weight}) => {
             try {
-                if(!reportId || !exerciseName || !repetitions || !weight) {
+                if(!reportId || !exerciseName || !duration || !weight) {
                     return {
                         __typename: "ExerciseFail",
-                        message: `At least one of reportId, exerciseName, repetitions, or weight is missing`,
+                        message: `At least one of reportId, exerciseName, duration, or weight is missing`,
                         statusCode: 401
                     };
                 }
@@ -25,7 +25,7 @@ module.exports = {
                 const newExercise = new Exercise({
                     "reportId": reportId,
                     "exerciseName": exerciseName,
-                    "repetitions": repetitions,
+                    "duration": duration,
                     "weight": weight
                 });
                 await newExercise.save();
@@ -72,7 +72,7 @@ module.exports = {
                 return {
                     __typename: "Exercise",
                     exerciseName: exercise.exerciseName,
-                    repetitions: exercise.repetitions,
+                    duration: exercise.duration,
                     weight: exercise.weight,
                     statusCode: 200
                 };

@@ -10,7 +10,7 @@ const exerciseSchema = new Schema({
         type: String,
         required: true
     },
-    repetitions: {
+    duration: {
         type: Number,
         required: true,
     },

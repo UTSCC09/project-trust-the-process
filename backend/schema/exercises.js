@@ -8,7 +8,7 @@ const Exercise = gql`
 
   type Exercise {
     exerciseName: String!
-    repetitions: Int!
+    duration: Int!
     weight: Int!
     statusCode: Int!
   }
@@ -22,7 +22,7 @@ const Exercise = gql`
   union GetExerciseResult = Exercise | ExerciseFail
 
   type Mutation {
-    addExercise(reportId: String!, exerciseName: String!, repetitions: Int!, weight: Int!): AddExerciseResult!
+    addExercise(reportId: String!, exerciseName: String!, duration: Int!, weight: Int!): AddExerciseResult!
     getExercise(exerciseId: String!): GetExerciseResult!
   }
 
