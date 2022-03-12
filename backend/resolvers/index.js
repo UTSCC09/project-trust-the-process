@@ -1,9 +1,9 @@
-const User = require('./users')
-const Reports = require('./reports')
-const Exercises = require('./exercises')
+const User = require('./users');
+const Report = require('./reports');
+const Exercise = require('./exercises');
 
 module.exports = [
   User,
-  Reports,
-  Exercises
-]
+  Report,
+  Exercise
+];
