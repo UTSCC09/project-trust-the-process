@@ -90,9 +90,9 @@ const Video = () => {
 
     return (
         <>
-            <Chip label = {exercise} color = "success" size = "medium" />
+            <Chip sx = {{ml: "-25vh", mt: "3vh"}} label = {exercise} color = "success" size = "medium" />
             <Sketch setup={setup} />
-            <Button variant="contained" onClick={startOrStopWebcam}>{button}</Button>
+            <Button sx = {{ml: "-25vh", mb: "5vh"}} variant="contained" onClick={startOrStopWebcam}>{button}</Button>
         </> 
     )
 } 
