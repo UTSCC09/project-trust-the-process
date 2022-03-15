@@ -1,8 +1,11 @@
-import Sketch from "react-p5";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Sketch from 'react-p5';
+import { Button } from '@mui/material';
+import { Chip } from '@mui/material';
 
 const Video = () => {
-    const [exercise, setExercise] = useState('Rest');
+    const [exercise, setExercise] = useState('Enjoy Your Workout');
+    const [button, setButton] = useState('Start');
 
     const modelURL = 'https://teachablemachine.withgoogle.com/models/isZ-5lO5X/';
     const checkpointURL = modelURL + "model.json";
@@ -20,11 +23,20 @@ const Video = () => {
         totalClasses = model.getTotalClasses();
     }
 
-    async function loadWebcam() {
+    function loadWebcam() {
         webcam = new tmPose.Webcam(size, size, true); 
-        await webcam.setup();
-        await webcam.play();
-        window.requestAnimationFrame(loopWebcam);
+    }
+
+    async function startOrStopWebcam() {
+        if(button == 'Start') {
+            await webcam.setup();
+            await webcam.play();
+            setButton('Stop');
+            window.requestAnimationFrame(loopWebcam);
+        }
+        else {
+            console.log("STOP");
+        }
     }
 
     let setup = async(p5, canvasParentRef) => {
@@ -32,12 +44,14 @@ const Video = () => {
         myCanvas.position(5, 100);
         ctx = myCanvas.elt.getContext("2d");
         await load();
-        await loadWebcam();
+      	loadWebcam();
+        
     }
 
     async function loopWebcam(timestamp) {
         webcam.update(); 
         await predict();
+
         window.requestAnimationFrame(loopWebcam);
     }
 
@@ -54,13 +68,13 @@ const Video = () => {
 
         const sortedPrediction = prediction.sort((a, b) => - a.probability + b.probability);
 
-        if(sortedPrediction[0].probability.toFixed(2) > 0.8) {
+        if(sortedPrediction[0].probability.toFixed(2) > 0.9) {
             setExercise(sortedPrediction[0].className);
         }
 
         if (pose) {
-            drawPose(pose);
-        }
+          drawPose(pose);
+      	}
     }
 
     function drawPose(pose) {
@@ -76,10 +90,11 @@ const Video = () => {
 
     return (
         <>
-            <h1> {exercise} </h1>
+            <Chip label = {exercise} color = "success" size = "medium" />
             <Sketch setup={setup} />
+            <Button variant="contained" onClick={startOrStopWebcam}>{button}</Button>
         </> 
     )
-}
+} 
 
 export default Video;
