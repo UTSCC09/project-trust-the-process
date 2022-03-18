@@ -1,11 +1,12 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Sketch from 'react-p5';
 import { Button } from '@mui/material';
-import { Chip } from '@mui/material';
+import Data from "./data";
 
 const Video = () => {
-    const [exercise, setExercise] = useState('Enjoy Your Workout');
+    const [data, setData] = useState('');
     const [button, setButton] = useState('Start');
+    let startTime, endTime, duration, prevExercise = "", newExercise = ""
 
     const modelURL = 'https://teachablemachine.withgoogle.com/models/isZ-5lO5X/';
     const checkpointURL = modelURL + "model.json";
@@ -29,13 +30,21 @@ const Video = () => {
 
     async function startOrStopWebcam() {
         if(button == 'Start') {
+            startTime = Date.now();
             await webcam.setup();
             await webcam.play();
             setButton('Stop');
             window.requestAnimationFrame(loopWebcam);
         }
         else {
-            console.log("STOP");
+            // webcam.stop();
+ 
+            // Send the very last data. This doesn't work somehow. 
+            endTime = Date.now();
+            duration = Math.round((endTime - startTime) / 1000);
+            const data = newExercise + "," + prevExercise + "," + duration.toString();
+
+            // Redirect to a new page and show the report.
         }
     }
 
@@ -45,7 +54,6 @@ const Video = () => {
         ctx = myCanvas.elt.getContext("2d");
         await load();
       	loadWebcam();
-        
     }
 
     async function loopWebcam(timestamp) {
@@ -67,9 +75,17 @@ const Video = () => {
         );
 
         const sortedPrediction = prediction.sort((a, b) => - a.probability + b.probability);
+        const prob = sortedPrediction[0].probability.toFixed(2);
+        newExercise = sortedPrediction[0].className;
 
-        if(sortedPrediction[0].probability.toFixed(2) > 0.9) {
-            setExercise(sortedPrediction[0].className);
+        if(prob > 0.9 && prevExercise != newExercise) {
+            endTime = Date.now();
+            duration = Math.round((endTime - startTime) / 1000);
+            startTime = endTime;
+            
+            const data = newExercise + "," + prevExercise + "," + duration.toString();
+            setData(data);
+            prevExercise = sortedPrediction[0].className;
         }
 
         if (pose) {
@@ -90,8 +106,8 @@ const Video = () => {
 
     return (
         <>
-            <Chip sx = {{ml: "-25vh", mt: "3vh"}} label = {exercise} color = "success" size = "medium" />
-            <Sketch setup={setup} />
+            <Data data = {data} />
+            <Sketch setup = {setup} />
             <Button sx = {{ml: "-25vh", mb: "5vh"}} variant="contained" onClick={startOrStopWebcam}>{button}</Button>
         </> 
     )
