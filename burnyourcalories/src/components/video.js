@@ -7,6 +7,8 @@ import Data from "./data";
 import { makeStyles } from '@mui/styles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
+import Listening from "./listening";
+
 const theme = createTheme();
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
+const size = 600;
+let webcam;
+let model;
+let totalClasses;
+let myCanvas;
+let ctx;
+
 const Video = ({updateExercises, view, ...props}) => {
     const classes = useStyles(props);
 
@@ -35,13 +44,6 @@ const Video = ({updateExercises, view, ...props}) => {
     const modelURL = 'https://teachablemachine.withgoogle.com/models/isZ-5lO5X/';
     const checkpointURL = modelURL + "model.json";
     const metadataURL = modelURL + "metadata.json";
-
-    const size = 600;
-    let webcam;
-    let model;
-    let totalClasses;
-    let myCanvas;
-    let ctx;
 
     useEffect(() => {
         if (data) {
@@ -66,6 +68,7 @@ const Video = ({updateExercises, view, ...props}) => {
         if(button == 'Start') {
             startTime = Date.now();
             await webcam.setup();
+            console.log(webcam);
             await webcam.play();
             setButton('Stop');
             window.requestAnimationFrame(loopWebcam);
@@ -140,10 +143,11 @@ const Video = ({updateExercises, view, ...props}) => {
 
     return (
         <Container className={classes.root}>
+            <Listening loadModel={loadModel} loadWebcam={loadWebcam} startOrStopWebcam={startOrStopWebcam}/>
             <Data data = {data} />
             <Sketch setup = {setup} />
             <Button variant="contained" onClick={startOrStopWebcam} className={classes.button}>{button}</Button>
-        </Container> 
+        </Container>
     )
 } 
 
