@@ -89,6 +89,7 @@ export default function SignInUp({
       console.log(data)
       setTimeout(() => {
         setLoad(false);
+        navigate('/workout')
       }, 1500)
     },
     onError: (error) => {
