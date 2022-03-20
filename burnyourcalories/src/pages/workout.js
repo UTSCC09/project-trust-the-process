@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		alignItems: 'center',
         justifyItems: 'center',
+		justifyContent: 'space-between',
 		width: '100%',
+		flexDirection: 'row',
 	},
 	input: {
 		marginLeft: theme.spacing(1),
@@ -35,7 +37,7 @@ export default function Workout({
 	const [exercises, setExercises] = useState([])
 
 	return (
-        <Container maxWidth='xs' className={classes.root}>
+        <Container maxWidth='lg' className={classes.root}>
 			{console.log(exercises)}
 			<Video view={view} updateExercises={setExercises}/>
 			<LiveStatistic exercises={exercises} />

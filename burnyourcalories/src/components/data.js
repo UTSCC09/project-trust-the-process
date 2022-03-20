@@ -22,7 +22,7 @@ const Data = ({data}) => {
 
     return (
         <>
-            <StyledChip sx = {{ml: "-25vh", mt: "3vh"}} label = {data.substring(0, data.indexOf(","))} color = "success" size = "medium" />
+            <StyledChip sx = {{ mt: "3vh"}} label = {data.substring(0, data.indexOf(","))} color = "success" size = "medium" />
         </>
     )
 }
