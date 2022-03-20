@@ -118,7 +118,7 @@ const Video = (updateExercises) => {
         <>
             <Data data = {data} />
             <Sketch setup = {setup} />
-            <Button sx = {{ml: "-25vh", mb: "5vh"}} variant="contained" onClick={startOrStopWebcam}>{button}</Button>
+            <Button variant="contained" onClick={startOrStopWebcam}>{button}</Button>
         </> 
     )
 } 
