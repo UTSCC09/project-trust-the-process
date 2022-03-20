@@ -13,7 +13,7 @@ const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
 	root: {
 		padding: '2px 4px',
-		display: 'flex',
+		display: 'flex !important',
 		alignItems: 'center',
         justifyItems: 'center',
 		justifyContent: 'space-between',
@@ -37,7 +37,7 @@ export default function Workout({
 	const [exercises, setExercises] = useState([])
 
 	return (
-        <Container maxWidth='lg' className={classes.root}>
+        <Container className={classes.root}>
 			{console.log(exercises)}
 			<Video view={view} updateExercises={setExercises}/>
 			<LiveStatistic exercises={exercises} />
