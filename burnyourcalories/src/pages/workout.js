@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SignInUp from '../components/signinup';
 import {
-	Container,
+	Container, Typography,
 } from '@mui/material';
 import Video from '../components/video';
 import LiveStatistic from '../components/liveStatistics';
@@ -12,6 +12,16 @@ const theme = createTheme();
 
 const useStyles = makeStyles((theme) => ({
 	root: {
+		// display: 'flex',
+		// flexDirection: 'column',
+		// justifyContent: 'center',
+		// alignItems: 'center',
+		// textAlign: 'center',
+		backgroundColor: '#88A09E',
+		minHeight: '100vh',
+		minWidth: '100vw !important'
+	},
+	body: {
 		padding: '2px 4px',
 		display: 'flex !important',
 		alignItems: 'center',
@@ -26,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	iconButton: {
 		padding: 10,
+	},
+	title: {
+		color: 'black',
 	},
 }));
 
@@ -44,9 +57,11 @@ export default function Workout({
 
 	return (
         <Container className={classes.root}>
-			{console.log(exercises)}
-			<Video view={view} updateExercises={setExercises}/>
-			<LiveStatistic exercises={exercises} totalDuration={totalDuration}/>
+			<Typography variant={'h3'} className={classes.title} align={'center'}>Burn Your Calories Here!</Typography>
+			<Container className={classes.body}>
+				<Video view={view} updateExercises={setExercises}/>
+				<LiveStatistic exercises={exercises} totalDuration={totalDuration}/>
+			</Container>
 			{/* <LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]} totalDuration={totalDuration}/> */}
         </Container>
 	)

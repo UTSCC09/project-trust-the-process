@@ -33,7 +33,7 @@ ReactDOM.render(
           {/* Example path */}
           <Route exact path="/example" element={<Shoppies />} />
           {/* Sign-up page */}
-          <Route exact path="/signup" element={<Welcome view={'signup'} client={client}/>} />
+          <Route exact path="/" element={<Welcome view={'signup'} client={client}/>} />
           {/* Sign-in page */}
           <Route exact path="/signin" element={<Welcome view={'signin'} client={client}/>} />
           {/* Video page */}
