@@ -23,11 +23,11 @@ LiveStatistic.defaultProps = {
   totalWorkoutTime: 100
 };
 
+var totalTime = 0;
+
 export default function LiveStatistic(props) {
     const { exercises } = props;
     const classes = useStyles();
-
-    var totalTime = 0;
 
     function secondsToTime(duration) {
       var hours = Math.floor(Number(duration) / 3600);
