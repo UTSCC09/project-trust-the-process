@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sketch from 'react-p5';
 import { Button } from '@mui/material';
 import Data from "./data";
 
-const Video = () => {
+const Video = (updateExercises) => {
     const [data, setData] = useState('');
     const [button, setButton] = useState('Start');
     let startTime, endTime, duration, prevExercise = "", newExercise = ""
@@ -18,6 +18,16 @@ const Video = () => {
     let totalClasses;
     let myCanvas;
     let ctx;
+
+    useEffect(() => {
+        if (data) {
+            let splitData, exercise, duration
+            splitData = data.split(",")
+            exercise = splitData[0]
+            duration = splitData[2]
+            updateExercises.updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}])
+        }
+    }, [data])
 
     async function load() {
         model = await tmPose.load(checkpointURL, metadataURL);

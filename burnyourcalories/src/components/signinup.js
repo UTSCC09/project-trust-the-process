@@ -148,6 +148,7 @@ export default function SignInUp({
   }
 
   function SubmitButton() {
+    console.log(firstName, lastName, view)
     if (firstName && lastName && view == 'signin') {
       return (
         <LoadingButton

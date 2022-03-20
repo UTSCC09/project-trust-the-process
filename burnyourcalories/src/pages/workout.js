@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@mui/styles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import SignInUp from '../components/signinup'
@@ -6,6 +6,7 @@ import {
 	Container,
 } from '@mui/material'
 import Video from '../components/video'
+import LiveStatistic from '../components/liveStatistics'
 
 const theme = createTheme();
 
@@ -31,11 +32,13 @@ export default function Workout({
     ...props
 }) {
 	const classes = useStyles(props)
+	const [exercises, setExercises] = useState([])
 
 	return (
         <Container maxWidth='xs' className={classes.root}>
-            {/* <SignInUp view={view}/> ADD COMPONENT SIMILAR TO THIS*/}
-			<Video view={view}/>
+			{console.log(exercises)}
+			<Video view={view} updateExercises={setExercises}/>
+			<LiveStatistic exercises={exercises} />
         </Container>
 	)
 }

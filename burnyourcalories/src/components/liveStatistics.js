@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles';
-import { ExerciseStat } from "./exerciseStat";
 import { Typography } from '@mui/material';
+import ExerciseStat from './exerciseStat';
 
 const useStyles = makeStyles(() => ({
   liveStat: {
