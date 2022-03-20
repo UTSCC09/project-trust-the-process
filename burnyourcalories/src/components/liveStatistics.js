@@ -24,8 +24,10 @@ LiveStatistic.defaultProps = {
 };
 
 export default function LiveStatistic(props) {
-    const { exercises, totalWorkoutTime } = props;
+    const { exercises } = props;
     const classes = useStyles();
+
+    var totalTime = 0;
 
     function secondsToTime(duration) {
       var hours = Math.floor(Number(duration) / 3600);
@@ -37,6 +39,11 @@ export default function LiveStatistic(props) {
       var secondsDisplay = (seconds < 10 ? "0" + seconds : seconds);
 
       return hoursDisplay + ":" + minutesDisplay + ":" + secondsDisplay; 
+    }
+
+    function calculateTotalDuration(duration) {
+      totalTime += duration;
+      return duration;
     }
 
     return (
@@ -51,13 +58,13 @@ export default function LiveStatistic(props) {
           ) : (
             exercises.map((exercise, idx) => (
               <ExerciseStat
-                exerciseName={exercise.exerciseName} duration={secondsToTime(exercise.duration)}
+                exerciseName={exercise.exerciseName} duration={secondsToTime(calculateTotalDuration(exercise.duration))}
               />
             ))
           )}
           
           <Typography variant="h6">
-            {secondsToTime(totalWorkoutTime)}
+            {secondsToTime(totalTime)}
           </Typography>
         </Box>
       </Container>
