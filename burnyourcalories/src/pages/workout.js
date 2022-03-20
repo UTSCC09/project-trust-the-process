@@ -35,12 +35,14 @@ export default function Workout({
 }) {
 	const classes = useStyles(props)
 	const [exercises, setExercises] = useState([])
+	const t = 320;
 
 	return (
         <Container className={classes.root}>
 			{console.log(exercises)}
 			<Video view={view} updateExercises={setExercises}/>
-			<LiveStatistic exercises={exercises} />
+			{/* <LiveStatistic exercises={exercises} /> */}
+			<LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]} totalWorkoutTime={t} />
         </Container>
 	)
 }
