@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { makeStyles } from '@mui/styles'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import SignInUp from '../components/signinup'
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SignInUp from '../components/signinup';
 import {
 	Container,
-} from '@mui/material'
-import Video from '../components/video'
-import LiveStatistic from '../components/liveStatistics'
+} from '@mui/material';
+import Video from '../components/video';
+import LiveStatistic from '../components/liveStatistics';
 
 const theme = createTheme();
 
@@ -27,31 +27,27 @@ const useStyles = makeStyles((theme) => ({
 	iconButton: {
 		padding: 10,
 	},
-}))
+}));
 
 export default function Workout({
     view,
     ...props
 }) {
-	const classes = useStyles(props)
-	const [exercises, setExercises] = useState([])
+	const classes = useStyles(props);
+	const [exercises, setExercises] = useState([]);
 
 	let totalDuration = 0;
 
-	console.log(totalDuration);
-
 	exercises.map((exercise, idx) => (
-		totalDuration += exercise.duration
+		totalDuration += Number(exercise.duration)
 	));
-
-	console.log(totalDuration);
 
 	return (
         <Container className={classes.root}>
 			{console.log(exercises)}
 			<Video view={view} updateExercises={setExercises}/>
-			{/* <LiveStatistic exercises={exercises} totalDuration={totalDuration}/> */}
-			<LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]} totalDuration={totalDuration}/>
+			<LiveStatistic exercises={exercises} totalDuration={totalDuration}/>
+			{/* <LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]} totalDuration={totalDuration}/> */}
         </Container>
 	)
 }

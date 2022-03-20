@@ -20,10 +20,8 @@ const useStyles = makeStyles(() => ({
 
 LiveStatistic.defaultProps = {
   exercise: [],
-  totalWorkoutTime: 100
+  totalDuration: 599
 };
-
-var totalTime = 0;
 
 export default function LiveStatistic(props) {
     const { exercises, totalDuration} = props;
@@ -41,12 +39,7 @@ export default function LiveStatistic(props) {
       return hoursDisplay + ":" + minutesDisplay + ":" + secondsDisplay; 
     }
 
-    function calculateTotalDuration(duration) {
-      totalTime += duration;
-      return duration;
-    }
-
-    console.log(totalDuration);
+    const paginatedExercises = exercises.slice(Math.max(exercises.length - 10, 0));
 
     return (
       <Container className={classes.liveStat}>
@@ -55,10 +48,10 @@ export default function LiveStatistic(props) {
             Live Statistics
           </Typography>
 
-          {exercises.length === 0 ? (
+          {paginatedExercises.length === 0 ? (
             <h2>No exercises added yet, try adding some.</h2>
           ) : (
-            exercises.map((exercise, idx) => (
+            paginatedExercises.map((exercise, idx) => (
               <ExerciseStat
                 exerciseName={exercise.exerciseName} duration={secondsToTime(exercise.duration)}
               />
