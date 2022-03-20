@@ -26,7 +26,7 @@ LiveStatistic.defaultProps = {
 var totalTime = 0;
 
 export default function LiveStatistic(props) {
-    const { exercises } = props;
+    const { exercises, totalDuration} = props;
     const classes = useStyles();
 
     function secondsToTime(duration) {
@@ -46,6 +46,8 @@ export default function LiveStatistic(props) {
       return duration;
     }
 
+    console.log(totalDuration);
+
     return (
       <Container className={classes.liveStat}>
         <Box sx={{ border: 3 }} className={classes.bpad}>
@@ -58,13 +60,13 @@ export default function LiveStatistic(props) {
           ) : (
             exercises.map((exercise, idx) => (
               <ExerciseStat
-                exerciseName={exercise.exerciseName} duration={secondsToTime(calculateTotalDuration(exercise.duration))}
+                exerciseName={exercise.exerciseName} duration={secondsToTime(exercise.duration)}
               />
             ))
           )}
           
           <Typography variant="h6">
-            {secondsToTime(totalTime)}
+            {secondsToTime(totalDuration)}
           </Typography>
         </Box>
       </Container>

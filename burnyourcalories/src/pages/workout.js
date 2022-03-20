@@ -36,12 +36,22 @@ export default function Workout({
 	const classes = useStyles(props)
 	const [exercises, setExercises] = useState([])
 
+	let totalDuration = 0;
+
+	console.log(totalDuration);
+
+	exercises.map((exercise, idx) => (
+		totalDuration += exercise.duration
+	));
+
+	console.log(totalDuration);
+
 	return (
         <Container className={classes.root}>
 			{console.log(exercises)}
 			<Video view={view} updateExercises={setExercises}/>
-			{/* <LiveStatistic exercises={exercises} /> */}
-			<LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]}/>
+			{/* <LiveStatistic exercises={exercises} totalDuration={totalDuration}/> */}
+			<LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]} totalDuration={totalDuration}/>
         </Container>
 	)
 }
