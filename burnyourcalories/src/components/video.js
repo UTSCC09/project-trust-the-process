@@ -1,12 +1,35 @@
 import { useEffect, useState } from "react";
 import Sketch from 'react-p5';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import Data from "./data";
+import { makeStyles } from '@mui/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-const Video = (updateExercises) => {
+const theme = createTheme();
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		padding: '2px 4px',
+		display: 'flex !important',
+		alignItems: 'center',
+        justifyItems: 'center',
+		justifyContent: 'space-between',
+		width: '100%',
+		flexDirection: 'column',
+	},
+    button: {
+        position: "relative !important",
+        marginTop: "5% !important"   
+    },
+}))
+
+const Video = ({updateExercises, view, ...props}) => {
+    const classes = useStyles(props);
+
     const [data, setData] = useState('');
     const [button, setButton] = useState('Start');
-    let startTime, endTime, duration, prevExercise = "", newExercise = ""
+    let startTime, endTime, duration, prevExercise = "", newExercise = "";
+
 
     const modelURL = 'https://teachablemachine.withgoogle.com/models/isZ-5lO5X/';
     const checkpointURL = modelURL + "model.json";
@@ -25,7 +48,7 @@ const Video = (updateExercises) => {
             splitData = data.split(",")
             exercise = splitData[0]
             duration = splitData[2]
-            updateExercises.updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}])
+            updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}])
         }
     }, [data])
 
@@ -60,7 +83,7 @@ const Video = (updateExercises) => {
 
     let setup = async(p5, canvasParentRef) => {
         myCanvas = p5.createCanvas(size, size).parent(canvasParentRef);
-        myCanvas.position(5, 100);
+        myCanvas.position(7, 20);
         ctx = myCanvas.elt.getContext("2d");
         await load();
       	loadWebcam();
@@ -115,11 +138,11 @@ const Video = (updateExercises) => {
     }
 
     return (
-        <>
+        <Container className={classes.root}>
             <Data data = {data} />
             <Sketch setup = {setup} />
-            <Button variant="contained" onClick={startOrStopWebcam}>{button}</Button>
-        </> 
+            <Button variant="contained" onClick={startOrStopWebcam} className={classes.button}>{button}</Button>
+        </Container> 
     )
 } 
 
