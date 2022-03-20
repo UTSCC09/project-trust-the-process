@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles';
-import { Typography } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
 import ExerciseStat from './exerciseStat';
 
 const useStyles = makeStyles(() => ({
@@ -8,8 +8,13 @@ const useStyles = makeStyles(() => ({
     height: 500,
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'space-between',
 		alignItems: 'center'
+  },
+  bpad: {    
+    padding: '10px',
+    display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
   },
 }));
 
@@ -22,25 +27,39 @@ export default function LiveStatistic(props) {
     const { exercises, totalWorkoutTime } = props;
     const classes = useStyles();
 
-    return (
-      <div className={classes.liveStat}>
-        <Typography align="centre" variant="h2">
-          Live Statistics
-        </Typography>
+    function secondsToTime(duration) {
+      var hours = Math.floor(Number(duration) / 3600);
+      var minutes = Math.floor(Number(duration) % 3600 / 60);
+      var seconds = Math.floor(Number(duration) % 3600 % 60);
 
-        {exercises.length === 0 ? (
-          <h2>No exercises added yet, try adding some.</h2>
-        ) : (
-          exercises.map((exercise, idx) => (
-            <ExerciseStat
-              exercise={exercise}
-            />
-          ))
-        )}
-        
-        <Typography align="centre" variant="h6">
-          {totalWorkoutTime}
-        </Typography>
-      </div>
+      var hoursDisplay = (hours < 10 ? "0" + hours : hours);
+      var minutesDisplay = (minutes < 10 ? "0" + minutes : minutes);
+      var secondsDisplay = (seconds < 10 ? "0" + seconds : seconds);
+
+      return hoursDisplay + ":" + minutesDisplay + ":" + secondsDisplay; 
+    }
+
+    return (
+      <Container className={classes.liveStat}>
+        <Box sx={{ border: 3 }} className={classes.bpad}>
+          <Typography className={classes.header} variant="h3">
+            Live Statistics
+          </Typography>
+
+          {exercises.length === 0 ? (
+            <h2>No exercises added yet, try adding some.</h2>
+          ) : (
+            exercises.map((exercise, idx) => (
+              <ExerciseStat
+                exerciseName={exercise.exerciseName} duration={secondsToTime(exercise.duration)}
+              />
+            ))
+          )}
+          
+          <Typography variant="h6">
+            {secondsToTime(totalWorkoutTime)}
+          </Typography>
+        </Box>
+      </Container>
     );
 }
