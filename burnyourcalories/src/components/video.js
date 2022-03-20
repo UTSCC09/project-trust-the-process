@@ -33,25 +33,29 @@ let model;
 let totalClasses;
 let myCanvas;
 let ctx;
+let startTime, endTime, duration, prevExercise = "", newExercise = "";
+let count = 0;
 
 const Video = ({updateExercises, view, ...props}) => {
     const classes = useStyles(props);
 
     const [data, setData] = useState('');
     const [button, setButton] = useState('Start');
-    let startTime, endTime, duration, prevExercise = "", newExercise = "";
 
     const modelURL = 'https://teachablemachine.withgoogle.com/models/isZ-5lO5X/';
     const checkpointURL = modelURL + "model.json";
     const metadataURL = modelURL + "metadata.json";
 
     useEffect(() => {
-        if (data) {
+        if (data && count > 1) {
             let splitData, exercise, duration
             splitData = data.split(",")
             exercise = splitData[0]
             duration = splitData[2]
             updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}])
+        }
+        else {
+            count += 1;
         }
     }, [data])
 
@@ -68,20 +72,14 @@ const Video = ({updateExercises, view, ...props}) => {
         if(button == 'Start') {
             startTime = Date.now();
             await webcam.setup();
-            console.log(webcam);
             await webcam.play();
             setButton('Stop');
             window.requestAnimationFrame(loopWebcam);
         }
         else {
-            // webcam.stop();
- 
-            // Send the very last data. This doesn't work somehow. 
-            endTime = Date.now();
-            duration = Math.round((endTime - startTime) / 1000);
             const data = newExercise + "," + prevExercise + "," + duration.toString();
-
-            // Redirect to a new page and show the report.
+            setData(data);
+            webcam.pause();
         }
     }
 

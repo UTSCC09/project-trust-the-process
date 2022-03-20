@@ -4,16 +4,23 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 const Listening = ({loadModel, loadWebcam, startOrStopWebcam}) => {
     const commands = [
         {
-          command: 'Start',
-          callback: async () => {
-              await loadModel();
-              loadWebcam();
-              await startOrStopWebcam();
-          },
-          matchInterim: true
+            command: 'Start',
+            callback: async () => {
+                await loadModel();
+                loadWebcam();
+                await startOrStopWebcam();
+            },
+            matchInterim: true
+        },
+        {
+            command: 'Stop',
+            callback: async () => {
+                await startOrStopWebcam();
+            },
+            matchInterim: true
         }
     ]
-    const { transcript, browserSupportsSpeechRecognition } = useSpeechRecognition({ commands })
+    const {browserSupportsSpeechRecognition } = useSpeechRecognition({ commands })
     if (!browserSupportsSpeechRecognition) {
         return null
     }
