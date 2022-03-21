@@ -81,15 +81,14 @@ export default function SignInUp({
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [signedUp, setSignedUp] = useState(false)
   const navigate = useNavigate()
 
   const [signIn] = useMutation(SIGN_IN, {
     onCompleted: (data) => {
       console.log(data)
       setTimeout(() => {
-        setLoad(false);
-        navigate('/workout')
+        setLoad(false)
+        if (data.loginUser.statusCode == 200) navigate('/workout')
       }, 1500)
     },
     onError: (error) => {
@@ -101,7 +100,7 @@ export default function SignInUp({
   const [signUp] = useMutation(SIGN_UP, {
     onCompleted: (data) => {
       console.log(data)
-      setSignedUp(true)
+      navigate('/signin')
       setTimeout(() => {
         setLoad(false)
       }, 500)
@@ -111,12 +110,6 @@ export default function SignInUp({
       setLoad(false)
     }
   })
-
-  useEffect(() => {
-    if (signedUp) {
-      navigate('/signin')
-    }
-  }, [signedUp])
 
   useEffect(() => {
     if (load) {
@@ -149,8 +142,7 @@ export default function SignInUp({
   }
 
   function SubmitButton() {
-    console.log(firstName, lastName, view)
-    if (firstName && lastName && view == 'signin') {
+    if (email && password && view == 'signin') {
       return (
         <LoadingButton
           type="submit"
