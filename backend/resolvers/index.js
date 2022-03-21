@@ -1,11 +1,9 @@
-const resolvers = {
-    Query: {
-      me: () => {
-            return {
-            username: 'CSCC09',
-            };
-        },
-    },
-};
-  
-module.exports = resolvers;
+const User = require('./users');
+const Report = require('./reports');
+const Exercise = require('./exercises');
+
+module.exports = [
+  User,
+  Report,
+  Exercise
+];
