@@ -19,10 +19,9 @@ const Data = ({data}) => {
     exercise = splitData[1];
     duration = splitData[2];
 
-
     return (
         <>
-            <StyledChip sx = {{ mt: "3vh"}} label = {data.substring(0, data.indexOf(",")) || 'Click Start To Begin'} color = "success" size = "medium" />
+            <StyledChip sx = {{ mt: "3vh"}} label = {data.substring(0, data.indexOf(",")) || 'Click Start or Say "Start" To Begin'} color = "success" size = "medium" />
         </>
     )
 }
