@@ -100,9 +100,9 @@ export default function SignInUp({
   const [signUp] = useMutation(SIGN_UP, {
     onCompleted: (data) => {
       console.log(data)
-      navigate('/signin')
       setTimeout(() => {
         setLoad(false)
+        if (data.registerUser.statusCode == 200) navigate('/signin')
       }, 500)
     },
     onError: (error) => {
