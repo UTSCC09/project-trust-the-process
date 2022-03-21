@@ -1,11 +1,10 @@
 import { makeStyles } from '@mui/styles';
-import { Container, Box, Typography } from '@mui/material';
+import { Container, Box, Typography, Alert } from '@mui/material';
 import ExerciseStat from './exerciseStat';
 
 const useStyles = makeStyles(() => ({
   liveStat: {
     width: 300,
-    height: 500,
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center'
@@ -15,6 +14,9 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+  },
+  alert: {
+    marginBottom: '10px',
   },
 }));
 
@@ -43,6 +45,9 @@ export default function LiveStatistic(props) {
 
     return (
       <Container className={classes.liveStat}>
+        <Alert severity={'info'} className={classes.alert}>
+          Start working out and have your exercises recorded into a report that you can look at later
+        </Alert>
         <Box sx={{ border: 3 }} className={classes.bpad}>
           <Typography className={classes.header} variant="h3">
             Live Statistics
