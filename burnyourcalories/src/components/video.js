@@ -47,10 +47,10 @@ const Video = ({updateExercises, view, ...props}) => {
     const metadataURL = modelURL + "metadata.json";
 
     useEffect(() => {
-        if (data && count > 1) {
+        if (data && count > 2) {
             let splitData, exercise, duration
             splitData = data.split(",")
-            exercise = splitData[0]
+            exercise = splitData[1]
             duration = splitData[2]
             updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}])
         }
@@ -72,13 +72,12 @@ const Video = ({updateExercises, view, ...props}) => {
         if(button == 'Start') {
             startTime = Date.now();
             await webcam.setup();
+            console.log(webcam);
             await webcam.play();
             setButton('Stop');
             window.requestAnimationFrame(loopWebcam);
         }
         else {
-            const data = newExercise + "," + prevExercise + "," + duration.toString();
-            setData(data);
             webcam.pause();
         }
     }
