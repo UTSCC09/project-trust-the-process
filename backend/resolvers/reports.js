@@ -51,7 +51,47 @@ module.exports = {
             }
         },
 
-        getReportByDate: async (_, {userId, date}) => {
+        getUserReportDates: async (_, {userId}) => {
+            try {
+                if(!userId) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `reportId is missing`,
+                        statusCode: 401
+                    };
+                }
+
+                const reports = await Report.find({"userId": userId});
+                if(!reports) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `The report with userId ${userId} cannot be found`,
+                        statusCode: 404
+                    };
+                }
+
+                let userDates = [];
+
+                reports.forEach(function (report, _) {
+                    userDates.push(report.date);
+                });
+
+                return {
+                    __typename: "UserReportDates",
+                    dates: userDates,
+                    statusCode: 200
+                };
+            }
+            catch(err) {
+                return {
+                    __typename: "ReportFail",
+                    message: `${error}`,
+                    statusCode: 500
+                };
+            }
+        },
+
+        getReportTimesByDate: async (_, {userId, date}) => {
             try {
                 if(!userId || !date) {
                     return {
@@ -61,11 +101,51 @@ module.exports = {
                     };
                 }
 
-                const report = await Report.findOne({"userId": userId, "date": date});
-                if(!report) {
+                const reports = await Report.find({"userId": userId, "date": date});
+                if(!reports) {
                     return {
                         __typename: "ReportFail",
                         message: `The report with userId ${userId} and date ${date} cannot be found`,
+                        statusCode: 404
+                    };
+                }
+
+                let workoutTimes = [];
+
+                reports.forEach(function (report, _) {
+                    workoutTimes.push({startTime: report.startTime, endTime: report.endTime, reportId: report._id});
+                });
+                
+                return {
+                    __typename: "ReportTimes",
+                    times: workoutTimes,
+                    statusCode: 200
+                };
+            }
+            catch(err) {
+                return {
+                    __typename: "ReportFail",
+                    message: `${error}`,
+                    statusCode: 500
+                };
+            }
+        },
+
+        getReportById: async (_, {reportId}) => {
+            try {
+                if(!reportId) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `reportId is missing`,
+                        statusCode: 401
+                    };
+                }
+
+                const report = await Report.findOne({"reportId": reportId});
+                if(!report) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `The report with reportId ${reportId} cannot be found`,
                         statusCode: 404
                     };
                 }
