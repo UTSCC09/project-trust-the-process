@@ -7,17 +7,13 @@ import {
 } from '@mui/material';
 import Video from '../components/video';
 import LiveStatistic from '../components/liveStatistics';
+import NavBar from '../components/navbar';
 
 const theme = createTheme();
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		// display: 'flex',
-		// flexDirection: 'column',
-		// justifyContent: 'center',
-		// alignItems: 'center',
-		// textAlign: 'center',
-		backgroundColor: '#88A09E',
+		backgroundColor: '#606B6F',
 		minHeight: '100vh',
 		minWidth: '100vw !important'
 	},
@@ -57,7 +53,7 @@ export default function Workout({
 
 	return (
         <Container className={classes.root}>
-			<Typography variant={'h3'} className={classes.title} align={'center'}>Burn Your Calories Here!</Typography>
+			<NavBar />
 			<Container className={classes.body}>
 				<Video view={view} updateExercises={setExercises}/>
 				<LiveStatistic exercises={exercises} totalDuration={totalDuration}/>

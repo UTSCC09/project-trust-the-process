@@ -88,7 +88,7 @@ export default function SignInUp({
       console.log(data)
       setTimeout(() => {
         setLoad(false)
-        if (data.loginUser.statusCode == 200) navigate('/workout')
+        if (data.loginUser.statusCode == 200) navigate('/dashboard')
       }, 1500)
     },
     onError: (error) => {
