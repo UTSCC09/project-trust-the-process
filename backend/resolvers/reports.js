@@ -141,7 +141,7 @@ module.exports = {
                     };
                 }
 
-                const report = await Report.findOne({"reportId": reportId});
+                const report = await Report.findOne({_id: reportId});
                 if(!report) {
                     return {
                         __typename: "ReportFail",
