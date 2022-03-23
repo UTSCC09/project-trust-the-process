@@ -16,6 +16,22 @@ const Report = gql`
     statusCode: Int!
   }
 
+  type UserReportDates {
+    dates: [String!]
+    statusCode: Int!
+  }
+
+  type WorkoutTime {
+    startTime: String!
+    endTime: String!
+    reportId: String!
+  }
+
+  type ReportTimes {
+    times: [WorkoutTime!]!
+    statusCode: Int!
+  }
+
   type ReportEnd {
     endTime: String!
     statusCode: Int!
@@ -27,12 +43,16 @@ const Report = gql`
   }
 
   union initReportResult = ReportId | ReportFail
+  union UserReportDatesResult = UserReportDates | ReportFail
+  union ReportsTimesResult = ReportTimes | ReportFail
   union ReportResult = Report | ReportFail
   union EndReportResult = ReportEnd | ReportFail
 
   type Mutation {
     initReport(userId: String!): initReportResult!
-    getReportByDate(userId: String!, date: String!): ReportResult!
+    getUserReportDates(userId: String!): UserReportDatesResult
+    getReportTimesByDate(userId: String!, date: String!): ReportsTimesResult!
+    getReportById(reportId: String!): ReportResult!
     endReport(reportId: String!): EndReportResult!
   }
 
