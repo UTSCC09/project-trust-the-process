@@ -13,6 +13,10 @@ const exerciseSchema = new Schema({
     duration: {
         type: Number,
         required: true,
+    },
+    order: {
+        type: Number,
+        required: true
     }
 });
 
