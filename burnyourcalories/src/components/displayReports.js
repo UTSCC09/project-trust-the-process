@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 const _renderReports = (reports) => {
     const classes = useStyles()
-    console.log('called')
     if (reports.length == 0) {
         return (
             <Typography variant={'h5'} color={'black'}>

@@ -16,6 +16,11 @@ import {
 } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import getDaysInMonth from 'date-fns/getDaysInMonth'
+import {
+    useMutation,
+    useQuery,
+    gql
+} from '@apollo/client'
 
 const theme = createTheme();
 
@@ -41,25 +46,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function getRandomNumber(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-}
+const GET_USER_REPORT_DATES = gql`
+    mutation($userId: String!, $month: String!, $year: String!) {
+        getUserReportDates(userId: $userId, month: $month, year: $year) {
+        ... on ReportFail {
+            message,
+            statusCode
+        }
+        ... on UserReportDates {
+            dates,
+            statusCode
+        }
+    }
+  }
+`
 
-function fakeFetch(date, { signal }) {
-    return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        const daysInMonth = getDaysInMonth(date);
-        const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
-  
-        resolve({ daysToHighlight });
-      }, 500);
-  
-      signal.onabort = () => {
-        clearTimeout(timeout);
-        reject(new DOMException('aborted', 'AbortError'));
-      };
-    });
-}
+const userId = '62253040d391f4d51508deae' // DELETE LATER (TESTING ONLY)
 
 const initialValue = new Date();
 
@@ -71,25 +73,38 @@ export default function ReportCalendar({
 	const classes = useStyles(props)
     const requestAbortController = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [highlightedDays, setHighlightedDays] = useState([1, 2, 15]);
+    const [highlightedDays, setHighlightedDays] = useState([]);
     const [value, setValue] = useState(initialValue);
+
+    const [getHighlights] = useMutation(GET_USER_REPORT_DATES, {
+        onCompleted: (data) => {
+        },
+        onError: (error) => {
+            if (error.name !== 'AbortError') throw error;
+        }
+    })
 
     const fetchHighlightedDays = (date) => {
         const controller = new AbortController();
-        fakeFetch(date, {
-          signal: controller.signal,
+        let dateBroken = date.toString().split(' ')
+        let month = dateBroken[1]
+        let year = dateBroken[3]
+        getHighlights({ variables: { userId, month, year } })
+        .then((res) => {
+            let toHighlight = []
+            for (const date of res.data.getUserReportDates.dates) {
+                let dateBroken = date.split(' ')
+                toHighlight.push(parseInt(dateBroken[1]))
+            }
+            setHighlightedDays(toHighlight)
+            setIsLoading(false)
         })
-          .then(({ daysToHighlight }) => {
-            setHighlightedDays(daysToHighlight);
-            setIsLoading(false);
-          })
-          .catch((error) => {
+        .catch((error) => {
             // ignore the error if it's caused by `controller.abort`
             if (error.name !== 'AbortError') {
-              throw error;
+                throw error;
             }
-          })
-    
+        })
         requestAbortController.current = controller;
     }
 
@@ -120,32 +135,31 @@ export default function ReportCalendar({
 	return (
         <Box className={classes.box}>
             <Typography variant={'h6'} color={'black'}>
-                Select a date: 
+                Currently selected date: 
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
                     value={value}
                     loading={isLoading}
                     onChange={(newValue) => {
-                    setValue(newValue);
+                        setValue(newValue);
                     }}
                     onMonthChange={handleMonthChange}
                     renderInput={(params) => <TextField {...params} />}
                     renderLoading={() => <CalendarPickerSkeleton />}
                     renderDay={(day, _value, DayComponentProps) => {
-                    const isSelected =
-                        !DayComponentProps.outsideCurrentMonth &&
-                        highlightedDays.indexOf(day.getDate()) > 0;
-
-                    return (
-                        <Badge
-                        key={day.toString()}
-                        overlap="circular"
-                        badgeContent={isSelected ? '🟢' : undefined}
-                        >
-                            <PickersDay {...DayComponentProps} />
-                        </Badge>
-                    );
+                        const isSelected =
+                            !DayComponentProps.outsideCurrentMonth &&
+                            highlightedDays.indexOf(day.getDate()) > -1;
+                        return (
+                            <Badge
+                            key={day.toString()}
+                            overlap="circular"
+                            badgeContent={isSelected ? '🟢' : undefined}
+                            >
+                                <PickersDay {...DayComponentProps} />
+                            </Badge>
+                        );
                     }}
                 />
             </LocalizationProvider>
