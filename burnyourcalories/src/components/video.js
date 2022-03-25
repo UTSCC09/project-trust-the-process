@@ -6,6 +6,7 @@ import { Button, Container } from '@mui/material';
 import Data from "./data";
 import { makeStyles } from '@mui/styles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useMutation, gql } from '@apollo/client';
 
 import Listening from "./listening";
 
@@ -35,8 +36,24 @@ let myCanvas;
 let ctx;
 let startTime, endTime, duration, prevExercise = "", newExercise = "";
 let count = 0;
+let report, reportId, userId = "623d4a099d89d0950438a820";
 
-const Video = ({updateExercises, view, ...props}) => {
+const INIT_REPORT = gql`
+  mutation($userId: String!) {
+    initReport(userId: $userId) {
+      ... on ReportFail {
+        message,
+        statusCode
+      }
+      ... on ReportId {
+        reportId,
+        statusCode
+      }
+    }
+  }
+`;
+
+const Video = ({getReportId, updateExercises, view, ...props}) => {
     const classes = useStyles(props);
 
     const [data, setData] = useState('');
@@ -45,6 +62,15 @@ const Video = ({updateExercises, view, ...props}) => {
     const modelURL = 'https://teachablemachine.withgoogle.com/models/isZ-5lO5X/';
     const checkpointURL = modelURL + "model.json";
     const metadataURL = modelURL + "metadata.json";
+
+    const [initReport] = useMutation(INIT_REPORT, {
+        onCompleted: (data) => {
+            return data;
+        },
+        onError: () => {
+            return null;
+        }
+    });
 
     useEffect(() => {
         if (data && count > 2) {
@@ -70,9 +96,14 @@ const Video = ({updateExercises, view, ...props}) => {
 
     const startOrStopWebcam = async() => {
         if(button == 'Start') {
+            report = await initReport({variables: {userId}});
+            if(report) {
+                reportId = report.data.initReport.reportId;
+                getReportId(reportId);
+            }
+
             startTime = Date.now();
             await webcam.setup();
-            console.log(webcam);
             await webcam.play();
             setButton('Stop');
             window.requestAnimationFrame(loopWebcam);
