@@ -5,6 +5,8 @@ import {
 	Container,
 	Box,
     Alert,
+    Typography,
+    Modal,
 } from '@mui/material'
 import ReportCalendar from '../components/reportCalendar'
 import NavBar from '../components/navbar'
@@ -33,6 +35,16 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         maxWidth: '33%',
+    },
+    modal: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        backgroundColor: 'green',
+        border: '2px solid #000',
+        padding: '16px',
     }
 }))
 
@@ -65,6 +77,12 @@ export default function Reports({
     const [selectedDate, setSelectedDate] = useState(new Date)
     const [reports, setReports] = useState([])
 
+    const [open, setOpen] = useState(false)
+    const [reportModal, setReportModal] = useState('')
+
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false) 
+
     const [getReports] = useMutation(GET_REPORT_TIMES_BY_DATE, {
         onCompleted: (data) => {
         },
@@ -75,27 +93,44 @@ export default function Reports({
 
     useEffect(() => {
         if (selectedDate) {
-            // make req for reports here
             let dateBroken = selectedDate.toString().split(' ')
             let date = dateBroken[1] + " " + dateBroken[2] + " " + dateBroken[3]
-            console.log(date)
             getReports({ variables: { userId, date } })
             .then((res) => {
-                console.log(res)
+                setReports(res.data.getReportTimesByDate.times)
             })
             
         }
     }, [selectedDate])
 
+    useEffect(() => {
+        if (reportModal) {
+            console.log("THIS IS THE ID STATE: " + reportModal)
+        }
+    }, [reportModal])
+
 	return (
         <Container maxWidth='xs' className={classes.root}>
+            <Modal
+                open={open && reportModal}
+                onClose={handleClose}
+            >
+                <Box className={classes.modal}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </Typography>
+                </Box>
+            </Modal>
             <NavBar />
             <Box className={classes.body}>
                 <Box className={classes.select}>
                     <Alert severity={'info'}>Select a date below to see your reports populated on the right side. Dates with the 🟢 mean you have report(s) available for that day.</Alert>
                     <ReportCalendar updateDate={setSelectedDate}/>
                 </Box>
-                <DisplayReports reports={reports}/>
+                <DisplayReports reports={reports} openModal={handleOpen} setReport={setReportModal}/>
             </Box>
         </Container>
 	)
