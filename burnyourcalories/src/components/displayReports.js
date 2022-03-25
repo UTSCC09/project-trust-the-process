@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles } from '@mui/styles'
 import { createTheme } from '@mui/material/styles'
 import {
-    Container,
     Box,
     Typography,
 } from '@mui/material'
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#C9C9BD',
         color: 'white',
         borderColor: '#C9C9BD',
-        borderRadius: '10px',
+        borderRadius: '5px',
     }
 }))
 

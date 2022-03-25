@@ -23,19 +23,21 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: '#606B6F',
 		minHeight: '100vh',
-		minWidth: '100vw !important'
+		minWidth: '100vw !important',
 	},
     box: {
         border: '3px solid red',
         height: '20vh',
-        width: '33%',
+        paddingLeft: '40px',
+        paddingRight: '40px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#C9C9BD',
         borderColor: '#C9C9BD',
-        borderRadius: '10px',
+        borderRadius: '5px',
+        marginTop: '10px',
     }
 }))
 

@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import {
 	Container,
 	Box,
+    Alert,
 } from '@mui/material'
 import ReportCalendar from '../components/reportCalendar'
 import NavBar from '../components/navbar'
@@ -24,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between !important',
         margin: '20px',
+    },
+    select: {
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '33%',
     }
 }))
 
@@ -45,7 +51,10 @@ export default function Reports({
         <Container maxWidth='xs' className={classes.root}>
             <NavBar />
             <Box className={classes.body}>
-                <ReportCalendar updateDate={setDate}/>
+                <Box className={classes.select}>
+                    <Alert severity={'info'}>Select a date below to see your reports populated on the right side</Alert>
+                    <ReportCalendar updateDate={setDate}/>
+                </Box>
                 <DisplayReports reports={reports}/>
             </Box>
         </Container>
