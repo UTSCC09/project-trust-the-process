@@ -50,7 +50,7 @@ const Report = gql`
 
   type Mutation {
     initReport(userId: String!): initReportResult!
-    getUserReportDates(userId: String!): UserReportDatesResult
+    getUserReportDates(userId: String!, month: String!, year: String!): UserReportDatesResult
     getReportTimesByDate(userId: String!, date: String!): ReportsTimesResult!
     getReportById(reportId: String!): ReportResult!
     endReport(reportId: String!): EndReportResult!
