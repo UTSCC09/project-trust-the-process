@@ -72,6 +72,7 @@ module.exports = {
                     __typename: "Exercise",
                     exerciseName: exercise.exerciseName,
                     duration: exercise.duration,
+                    order: exercise.order,
                     statusCode: 200
                 };
             }

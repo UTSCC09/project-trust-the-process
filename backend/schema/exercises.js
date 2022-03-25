@@ -9,6 +9,7 @@ const Exercise = gql`
   type Exercise {
     exerciseName: String!
     duration: Int!
+    order: Int!
     statusCode: Int!
   }
 
