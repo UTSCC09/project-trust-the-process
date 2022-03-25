@@ -51,12 +51,12 @@ module.exports = {
             }
         },
 
-        getUserReportDates: async (_, {userId}) => {
+        getUserReportDates: async (_, {userId, month, year}) => {
             try {
-                if(!userId) {
+                if(!userId || !month || !year) {
                     return {
                         __typename: "ReportFail",
-                        message: `reportId is missing`,
+                        message: `At least one of userId, month, or year is missing`,
                         statusCode: 401
                     };
                 }
@@ -73,8 +73,11 @@ module.exports = {
                 let userDates = [];
 
                 reports.forEach(function (report, _) {
-                    userDates.push(report.date);
+                    if (report.date.includes(month) && report.date.includes(year)) {
+                        userDates.push(report.date);
+                    } 
                 });
+                userDates.sort();
 
                 return {
                     __typename: "UserReportDates",
