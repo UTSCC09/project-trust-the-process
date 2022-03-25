@@ -75,7 +75,7 @@ const _renderReports = (reports, openModal, setReport) => {
                             </Typography>
                         </CardContent>
                         <CardActions className={classes.btn}>
-                            <Button variant={'outlined'} onClick={() => { openModal; setReport(report.reportId)} }>Open report</Button>
+                            <Button variant={'outlined'} onClick={() => { openModal(); setReport(report.reportId)} }>Open report</Button>
                         </CardActions>
                     </Card>
                 </Grid>
