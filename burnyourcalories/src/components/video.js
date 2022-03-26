@@ -78,7 +78,9 @@ const Video = ({getReportId, updateExercises, view, ...props}) => {
             splitData = data.split(",")
             exercise = splitData[1]
             duration = splitData[2]
-            updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}])
+            if(duration != 0) {
+                updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}]);
+            }
         }
         else {
             count += 1;
@@ -94,22 +96,35 @@ const Video = ({getReportId, updateExercises, view, ...props}) => {
         webcam = new tmPose.Webcam(size, size, true); 
     }
 
+    const createReport = async() => {
+        report = await initReport({variables: {userId}});
+        if(report) {
+            reportId = report.data.initReport.reportId;
+            getReportId(reportId);
+        }
+    }
+
+    const startSession = async() => {
+        startTime = Date.now();
+        await webcam.setup();
+        await webcam.play();
+        setButton('Stop');
+        window.requestAnimationFrame(loopWebcam);
+    }
+
+    const stopSession = () => {
+        webcam.pause();
+    }
+
     const startOrStopWebcam = async() => {
         if(button == 'Start') {
-            report = await initReport({variables: {userId}});
-            if(report) {
-                reportId = report.data.initReport.reportId;
-                getReportId(reportId);
-            }
-
-            startTime = Date.now();
-            await webcam.setup();
-            await webcam.play();
-            setButton('Stop');
-            window.requestAnimationFrame(loopWebcam);
+           await createReport();
+           startSession();
         }
         else {
-            webcam.pause();
+            stopSession();
+            updateExercises([]);
+            setButton('Start');
         }
     }
 
@@ -171,7 +186,7 @@ const Video = ({getReportId, updateExercises, view, ...props}) => {
 
     return (
         <Container className={classes.root}>
-            <Listening loadModel={loadModel} loadWebcam={loadWebcam} startOrStopWebcam={startOrStopWebcam}/>
+            <Listening loadModel={loadModel} loadWebcam={loadWebcam} startSession={startSession} stopSession={stopSession} createReport={createReport}/>
             <Data data = {data} />
             <Sketch setup = {setup} />
             <Button variant="contained" onClick={startOrStopWebcam} className={classes.button}>{button}</Button>

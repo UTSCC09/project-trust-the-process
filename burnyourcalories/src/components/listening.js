@@ -17,12 +17,14 @@ const INIT_REPORT = gql`
   }
 `;
 
-const Listening = ({loadModel, loadWebcam, startOrStopWebcam}) => {
+let isReportInit = false;
+
+const Listening = ({loadModel, loadWebcam, startSession, stopSession, createReport}) => {
     let report, reportId, userId = "623d4a099d89d0950438a820";
 
     const [initReport] = useMutation(INIT_REPORT, {
         onCompleted: (data) => {
-            return data.reportId
+            return data
         },
         onError: () => {
             return null;
@@ -33,21 +35,20 @@ const Listening = ({loadModel, loadWebcam, startOrStopWebcam}) => {
         {
             command: 'Start',
             callback: async () => {
-                report = await initReport({variables: {userId}});
-                if(report) {
-                    reportId = report.data.initReport.reportId;
+                if(isReportInit == false) {
+                    isReportInit = true;
+                    createReport();
                     await loadModel();
+                    loadWebcam();
+                    await startSession();
                 }
-                
-                loadWebcam();
-                await startOrStopWebcam();
             },
             matchInterim: true
         },
         {
             command: 'Stop',
             callback: async () => {
-                await startOrStopWebcam();
+                await stopSession();
             },
             matchInterim: true
         }
