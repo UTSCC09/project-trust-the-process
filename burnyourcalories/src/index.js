@@ -17,7 +17,7 @@ import Shoppies from './pages/index';
 import Welcome from './pages/welcome';
 import Workout from './pages/workout';
 import Dashboard from './pages/dashboard';
-import Report from './pages/report';
+import Reports from './pages/reports';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -42,7 +42,8 @@ ReactDOM.render(
           <Route exact path="/workout" element={<Workout client={client}/>} />
           {/* Dashboard page */}
           <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route exact path="/report" element={<Report />} />
+          {/* Reports page */}
+          <Route exact path="/reports" element={<Reports />} />
         </Routes>
       </ThemeProvider>
     </ApolloProvider>

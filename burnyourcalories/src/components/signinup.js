@@ -85,7 +85,6 @@ export default function SignInUp({
 
   const [signIn] = useMutation(SIGN_IN, {
     onCompleted: (data) => {
-      console.log(data)
       setTimeout(() => {
         setLoad(false)
         if (data.loginUser.statusCode == 200) navigate('/dashboard')
@@ -99,7 +98,6 @@ export default function SignInUp({
 
   const [signUp] = useMutation(SIGN_UP, {
     onCompleted: (data) => {
-      console.log(data)
       setTimeout(() => {
         setLoad(false)
         if (data.registerUser.statusCode == 200) navigate('/signin')
