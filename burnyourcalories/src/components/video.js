@@ -6,6 +6,7 @@ import { Button, Container } from '@mui/material';
 import Data from "./data";
 import { makeStyles } from '@mui/styles'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { useMutation, gql } from '@apollo/client';
 
 import Listening from "./listening";
 
@@ -35,8 +36,24 @@ let myCanvas;
 let ctx;
 let startTime, endTime, duration, prevExercise = "", newExercise = "";
 let count = 0;
+let report, reportId, userId = "623d4a099d89d0950438a820";
 
-const Video = ({updateExercises, view, ...props}) => {
+const INIT_REPORT = gql`
+  mutation($userId: String!) {
+    initReport(userId: $userId) {
+      ... on ReportFail {
+        message,
+        statusCode
+      }
+      ... on ReportId {
+        reportId,
+        statusCode
+      }
+    }
+  }
+`;
+
+const Video = ({getReportId, updateExercises, view, ...props}) => {
     const classes = useStyles(props);
 
     const [data, setData] = useState('');
@@ -46,13 +63,24 @@ const Video = ({updateExercises, view, ...props}) => {
     const checkpointURL = modelURL + "model.json";
     const metadataURL = modelURL + "metadata.json";
 
+    const [initReport] = useMutation(INIT_REPORT, {
+        onCompleted: (data) => {
+            return data;
+        },
+        onError: () => {
+            return null;
+        }
+    });
+
     useEffect(() => {
         if (data && count > 2) {
             let splitData, exercise, duration
             splitData = data.split(",")
             exercise = splitData[1]
             duration = splitData[2]
-            updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}])
+            if(duration != 0) {
+                updateExercises(prevState => [...prevState, {'exerciseName': exercise, 'duration': duration}]);
+            }
         }
         else {
             count += 1;
@@ -68,17 +96,35 @@ const Video = ({updateExercises, view, ...props}) => {
         webcam = new tmPose.Webcam(size, size, true); 
     }
 
+    const createReport = async() => {
+        report = await initReport({variables: {userId}});
+        if(report) {
+            reportId = report.data.initReport.reportId;
+            getReportId(reportId);
+        }
+    }
+
+    const startSession = async() => {
+        startTime = Date.now();
+        await webcam.setup();
+        await webcam.play();
+        setButton('Stop');
+        window.requestAnimationFrame(loopWebcam);
+    }
+
+    const stopSession = () => {
+        webcam.pause();
+    }
+
     const startOrStopWebcam = async() => {
         if(button == 'Start') {
-            startTime = Date.now();
-            await webcam.setup();
-            console.log(webcam);
-            await webcam.play();
-            setButton('Stop');
-            window.requestAnimationFrame(loopWebcam);
+           await createReport();
+           startSession();
         }
         else {
-            webcam.pause();
+            stopSession();
+            updateExercises([]);
+            setButton('Start');
         }
     }
 
@@ -140,7 +186,7 @@ const Video = ({updateExercises, view, ...props}) => {
 
     return (
         <Container className={classes.root}>
-            <Listening loadModel={loadModel} loadWebcam={loadWebcam} startOrStopWebcam={startOrStopWebcam}/>
+            <Listening loadModel={loadModel} loadWebcam={loadWebcam} startSession={startSession} stopSession={stopSession} createReport={createReport}/>
             <Data data = {data} />
             <Sketch setup = {setup} />
             <Button variant="contained" onClick={startOrStopWebcam} className={classes.button}>{button}</Button>

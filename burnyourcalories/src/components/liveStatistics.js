@@ -26,7 +26,7 @@ LiveStatistic.defaultProps = {
 };
 
 export default function LiveStatistic(props) {
-    const { exercises, totalDuration} = props;
+    const { exercises, totalDuration } = props;
     const classes = useStyles();
 
     function secondsToTime(duration) {

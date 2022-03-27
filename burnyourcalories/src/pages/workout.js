@@ -8,6 +8,7 @@ import {
 import Video from '../components/video';
 import LiveStatistic from '../components/liveStatistics';
 import NavBar from '../components/navbar';
+import PopulateReport from '../components/populateReport';
 
 const theme = createTheme();
 
@@ -44,6 +45,7 @@ export default function Workout({
 }) {
 	const classes = useStyles(props);
 	const [exercises, setExercises] = useState([]);
+	const [reportId, setReportId] = useState('');
 
 	let totalDuration = 0;
 
@@ -55,8 +57,9 @@ export default function Workout({
         <Container className={classes.root}>
 			<NavBar />
 			<Container className={classes.body}>
-				<Video view={view} updateExercises={setExercises}/>
+				<Video view={view} updateExercises={setExercises} getReportId={setReportId}/>
 				<LiveStatistic exercises={exercises} totalDuration={totalDuration}/>
+				<PopulateReport exercises={exercises} reportId={reportId} />
 			</Container>
 			{/* <LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]} totalDuration={totalDuration}/> */}
         </Container>
