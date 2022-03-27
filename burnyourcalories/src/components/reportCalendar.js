@@ -61,7 +61,7 @@ const GET_USER_REPORT_DATES = gql`
   }
 `
 
-const userId = '62253040d391f4d51508deae' // DELETE LATER (TESTING ONLY)
+const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
 
 const initialValue = new Date();
 

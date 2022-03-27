@@ -11,6 +11,7 @@ import {
 import ReportCalendar from '../components/reportCalendar'
 import NavBar from '../components/navbar'
 import DisplayReports from '../components/displayReports'
+import ReportViz from '../components/reportViz'
 import {
     useMutation,
     useQuery,
@@ -67,7 +68,7 @@ const GET_REPORT_TIMES_BY_DATE = gql`
     }
 `
 
-const userId = '62253040d391f4d51508deae' // DELETE LATER (TESTING ONLY)
+const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
 
 export default function Reports({
     view,
@@ -116,9 +117,11 @@ export default function Reports({
                 onClose={handleClose}
             >
                 <Box className={classes.modal}>
-                    <Typography variant="h6" component="h2">
+                    <ReportViz reportId = {reportModal}/>
+
+                    {/*<Typography variant="h6" component="h2">
                         ReportId: {reportModal}
-                    </Typography>
+                    </Typography>*/}
                 </Box>
             </Modal>
             <NavBar />

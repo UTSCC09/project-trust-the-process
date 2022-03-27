@@ -64,10 +64,10 @@ const ReportViz = ({reportId}) => {
         return 0;
     }
 
-    const mapToNumber = (exerciseName) => {
-        if(exerciseName == 'rest') return 0;
-        if(exerciseName == 'squat') return 1;
-        if(exerciseName == 'shoulder press') return 2;
+    const whitespaceBreak = (exerciseName) => {
+        if(exerciseName.toLowerCase() == 'shoulder press')
+            return "Shoulder\nPress";
+        return exerciseName;
     }
 
 
@@ -91,7 +91,7 @@ const ReportViz = ({reportId}) => {
             exercise = exerciseObj.data.getExercise;
 
             times.push(Number(times[times.length - 1]) + exercise.duration);
-            exerciseNames.push(exercise.exerciseName);
+            exerciseNames.push(whitespaceBreak(exercise.exerciseName));
         }
         exerciseNames.push(exerciseNames[exerciseNames.length - 1]);
 
