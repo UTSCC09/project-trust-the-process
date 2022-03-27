@@ -50,7 +50,7 @@ export default function Dashboard({
                 Choose an option:
             </Typography>
             <Container className={classes.body}>
-                <FlashCard title={'Reports'} text={reportText} path={''} image={reportImg}/>
+                <FlashCard title={'Reports'} text={reportText} path={'/reports'} image={reportImg}/>
                 <FlashCard title={'Workout'} text={workoutText} path={'/workout'} image={workoutImg}/>
             </Container>
         </Container>
