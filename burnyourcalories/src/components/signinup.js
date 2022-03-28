@@ -8,6 +8,7 @@ import {
 	Typography,
 	Avatar,
 	TextField,
+  Link,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -79,6 +80,7 @@ export default function SignInUp({
   const [load, setLoad] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [validEmail, setValidEmail] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
@@ -110,6 +112,12 @@ export default function SignInUp({
   })
 
   useEffect(() => {
+    if (email && view == 'signup') {
+      setValidEmail(validateEmail(email))
+    } else if (email == '') setValidEmail(true)
+  }, [email])
+
+  useEffect(() => {
     if (load) {
       if (email && password && view == 'signin') {
         signIn({ variables: { email, password } })
@@ -139,6 +147,11 @@ export default function SignInUp({
     }
   }
 
+  function validateEmail (email) {
+    const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regexp.test(email);
+  }
+
   function SubmitButton() {
     if (email && password && view == 'signin') {
       return (
@@ -151,7 +164,7 @@ export default function SignInUp({
           Sign In
         </LoadingButton>
       )
-    } else if (firstName && lastName && email && password && view == 'signup') {
+    } else if (firstName && lastName && email && password && view == 'signup' && validEmail) {
       return (
         <LoadingButton
           type="submit"
@@ -220,7 +233,35 @@ export default function SignInUp({
                 /> 
               </>
               : null}
-              <TextField
+              {
+                validEmail ? (
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    value={email}
+                    onChange={ e => setEmail(e.target.value) }
+                    variant='outlined'
+                    id="email"
+                    label="Email"
+                    name="email"
+                  />
+                ) :
+                (
+                  <TextField
+                    error
+                    id="outlined-error-helper-text"
+                    required
+                    fullWidth
+                    label="Email"
+                    name="email"
+                    value={email}
+                    onChange={ e => setEmail(e.target.value) }
+                    helperText="Invalid email"
+                  />
+                )
+              }
+              {/* <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -230,7 +271,7 @@ export default function SignInUp({
                 id="email"
                 label="Email"
                 name="email"
-              />
+              /> */}
               <TextField
                 margin="normal"
                 required
@@ -246,6 +287,18 @@ export default function SignInUp({
               />
               <SubmitButton />
             </Box>
+            <Typography mt={1}>
+              {view == 'signup' ? (
+                <>
+                  Already have an account? <Link href="/signin">Sign In</Link>
+                </>
+              ): 
+              (
+                <>
+                  Don't have an account? <Link href="/">Sign Up</Link>
+                </>
+              )}
+            </Typography>
           </Box>
         </Container>
 	)
