@@ -92,7 +92,11 @@ export default function SignInUp({
     onCompleted: (data) => {
       setTimeout(() => {
         setLoad(false)
-        if (data.loginUser.statusCode == 200) navigate('/dashboard')
+        if (data.loginUser.statusCode == 200) {
+          setErrorMsg('')
+          setShowError(false)
+          navigate('/dashboard')
+        }
         else {
           setErrorMsg(data.loginUser.message)
           setShowError(true)
@@ -109,7 +113,11 @@ export default function SignInUp({
     onCompleted: (data) => {
       setTimeout(() => {
         setLoad(false)
-        if (data.registerUser.statusCode == 200) navigate('/signin')
+        if (data.registerUser.statusCode == 200) {
+          setErrorMsg('')
+          setShowError(false)
+          navigate('/signin')
+        }
         else {
           setErrorMsg(data.registerUser.message)
           setShowError(true)
