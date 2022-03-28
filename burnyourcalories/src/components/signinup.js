@@ -9,6 +9,7 @@ import {
 	Avatar,
 	TextField,
   Link,
+  Alert,
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -81,6 +82,8 @@ export default function SignInUp({
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [validEmail, setValidEmail] = useState(true)
+  const [errorMsg, setErrorMsg] = useState('')
+  const [showError, setShowError] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
@@ -90,6 +93,10 @@ export default function SignInUp({
       setTimeout(() => {
         setLoad(false)
         if (data.loginUser.statusCode == 200) navigate('/dashboard')
+        else {
+          setErrorMsg(data.loginUser.message)
+          setShowError(true)
+        }
       }, 1500)
     },
     onError: (error) => {
@@ -103,6 +110,10 @@ export default function SignInUp({
       setTimeout(() => {
         setLoad(false)
         if (data.registerUser.statusCode == 200) navigate('/signin')
+        else {
+          setErrorMsg(data.registerUser.message)
+          setShowError(true)
+        }
       }, 500)
     },
     onError: (error) => {
@@ -205,6 +216,9 @@ export default function SignInUp({
             <Typography component="h1" variant="h5">
               {view == 'signin' ? 'Sign in' : 'Sign up'}
             </Typography>
+            {showError ? (
+              <Alert style={{marginTop: '10px', marginBottom: '10px'}} severity={'error'}>{errorMsg}</Alert>
+            ) : undefined}
             <Box component="form" onSubmit={handleSubmit} noValidate>
               {view == 'signup' ? 
               <>
