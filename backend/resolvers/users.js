@@ -2,14 +2,16 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+import { checkAlphanumeric, checkEmail } from 'securityUtils';
+
 module.exports = {
     Mutation: {
         registerUser: async (_, {firstName, lastName, email, password}) => {
             try {
-                if(!firstName || !email || !password) {
+                if(!checkAlphanumeric(firstName) || !checkEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
-                        message: `At least one of firstName, email, or password is missing`,
+                        message: `At least one of firstName, email, or password is invalid`,
                         statusCode: 401
                     };
                 }
@@ -18,7 +20,7 @@ module.exports = {
                 if(user) {
                     return {
                         __typename: "UserFail",
-                        message: `The user with email ${email} has already existed`,
+                        message: `The user with email ${email} already exists`,
                         statusCode: 409
                     };
                 }
@@ -50,10 +52,10 @@ module.exports = {
 
         loginUser: async (_, {email, password}) => {
             try {
-                if(!email || !password) {
+                if(!checkEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
-                        message: `At least one of firstName, email, or password is missing`,
+                        message: `At least one of firstName, email, or password is invalid`,
                         statusCode: 401
                     };
                 }
@@ -76,7 +78,7 @@ module.exports = {
                     };
                 }
                 
-                const token = await jwt.sign({id: user.id}, "burnYourCalories", {expiresIn: 86400});
+                const token = await jwt.sign({id: user._id}, "burnYourCalories", {expiresIn: 86400});
                 return {
                     __typename: "UserLoginSuccess",
                     user: user,

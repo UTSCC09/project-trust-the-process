@@ -1,14 +1,24 @@
 const Exercise = require("../models/exercise");
 const Report = require("../models/report");
 
+import { checkAlphanumeric, checkObjectId } from 'securityUtils';
+
 module.exports = {
     Mutation: {
-        addExercise: async (_, {reportId, exerciseName, duration, order}) => {
+        addExercise: async (_, {reportId, exerciseName, duration, order}, context) => {
             try {
-                if(!reportId || !exerciseName || !duration || !order) {
+                if(!checkObjectId(context.id)) {
                     return {
                         __typename: "ExerciseFail",
-                        message: `At least one of reportId, exerciseName, duration, or order is missing`,
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                if(!checkObjectId(reportId) || !checkAlphanumeric(exerciseName) || !checkAlphanumeric(duration) || !checkAlphanumeric(order)) {
+                    return {
+                        __typename: "ExerciseFail",
+                        message: `At least one of reportId, exerciseName, duration, or order is invalid`,
                         statusCode: 401
                     };
                 }
@@ -50,12 +60,19 @@ module.exports = {
             }
         },
 
-        getExercise: async (_, {exerciseId}) => {
+        getExercise: async (_, {exerciseId}, context) => {
             try {
-                if(!exerciseId) {
+                if(!checkObjectId(context.id)) {
                     return {
                         __typename: "ExerciseFail",
-                        message: `exerciseId is missing`,
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+                if(!checkObjectId(exerciseId)) {
+                    return {
+                        __typename: "ExerciseFail",
+                        message: `exerciseId is invalid`,
                         statusCode: 401
                     };
                 }

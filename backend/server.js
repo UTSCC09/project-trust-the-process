@@ -8,6 +8,11 @@ const mongoose = require('mongoose');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => {
+    const token = req.headers.authorization || '';
+    const user = jwt.verify(token, "burnYourCalories");
+    return { user };
+  }
 });
 
 const port = process.env.SERVER_PORT;

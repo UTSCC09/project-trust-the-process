@@ -1,14 +1,24 @@
 const Report = require("../models/report");
 const User = require("../models/user");
 
+import { checkAlphanumeric, checkObjectId } from 'securityUtils';
+
 module.exports = {
     Mutation: {
-        initReport: async (_, {userId}) => {
+        initReport: async (_, {userId}, context) => {
             try {
-                if(!userId) {
+                if(!checkObjectId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `userId is missing`,
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                if(!checkObjectId(userId)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `userId is invalid`,
                         statusCode: 401
                     };
                 }
@@ -51,12 +61,20 @@ module.exports = {
             }
         },
 
-        getUserReportDates: async (_, {userId, month, year}) => {
+        getUserReportDates: async (_, {userId, month, year}, context) => {
             try {
-                if(!userId || !month || !year) {
+                if(!checkObjectId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `At least one of userId, month, or year is missing`,
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                if(!checkObjectId(userId) || !checkAlphanumeric(month) || !checkAlphanumeric(year)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `At least one of userId, month, or year is invalid`,
                         statusCode: 401
                     };
                 }
@@ -94,12 +112,20 @@ module.exports = {
             }
         },
 
-        getReportTimesByDate: async (_, {userId, date}) => {
+        getReportTimesByDate: async (_, {userId, date}, context) => {
             try {
-                if(!userId || !date) {
+                if(!checkObjectId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `At least one of userId, or date is missing`,
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                if(!checkObjectId(userId) || !checkAlphanumeric(date)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `At least one of userId, or date is invalid`,
                         statusCode: 401
                     };
                 }
@@ -134,12 +160,20 @@ module.exports = {
             }
         },
 
-        getReportById: async (_, {reportId}) => {
+        getReportById: async (_, {reportId}, context) => {
             try {
-                if(!reportId) {
+                if(!checkObjectId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `reportId is missing`,
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                if(!checkObjectId(reportId)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `reportId is inavlid`,
                         statusCode: 401
                     };
                 }
@@ -173,12 +207,20 @@ module.exports = {
             }
         },
 
-        endReport: async (_, {reportId}) => {
+        endReport: async (_, {reportId}, context) => {
             try {
-                if(!reportId) {
+                if(!checkObjectId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `reportId is missing`,
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                if(!checkObjectId(reportId)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `reportId is invalid`,
                         statusCode: 401
                     };
                 }

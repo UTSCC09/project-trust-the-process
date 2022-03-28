@@ -31,6 +31,7 @@ const User = gql`
     registerUser(firstName: String!, lastName: String!, email: String!, password: String!): UserRegisterResult!
     loginUser(email: String!, password: String!): UserLoginResult!
   }
+  
   type Query {
     _: String!
   }
