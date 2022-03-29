@@ -132,14 +132,13 @@ export default function DisplayReports({
         } else {
             setEnd(data.length - 1)
         }
-        console.log(data)
     }, [data])
 
     const handleNext = () => {
-        if (end + 4 > arrSize) setNext(false)
-        setStart(end+1)
+        if (end + 4 >= arrSize - 1) setNext(false)
+        setStart(end + 1)
+        setEnd(end + 4)
         setPrev(true)
-        setEnd(end+4)
     }
 
     const handlePrev = () => {

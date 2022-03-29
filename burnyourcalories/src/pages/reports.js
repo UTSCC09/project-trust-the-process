@@ -106,12 +106,6 @@ export default function Reports({
         }
     }, [selectedDate])
 
-    useEffect(() => {
-        if (reportModal) {
-            console.log("THIS IS THE ID STATE: " + reportModal)
-        }
-    }, [reportModal])
-
 	return (
         <Container maxWidth='xs' className={classes.root}>
             <Modal
