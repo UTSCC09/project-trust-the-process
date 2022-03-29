@@ -7,6 +7,8 @@ import {
     Alert,
     Typography,
     Modal,
+    ButtonGroup,
+    Button,
 } from '@mui/material'
 import ReportCalendar from '../components/reportCalendar'
 import NavBar from '../components/navbar'
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: '#606B6F',
 		minHeight: '100vh',
-		minWidth: '100vw !important'
+		minWidth: '100vw !important',
 	},
     body: {
         display: 'flex !important',
@@ -118,10 +120,6 @@ export default function Reports({
             >
                 <Box className={classes.modal}>
                     <ReportViz reportId = {reportModal}/>
-
-                    {/*<Typography variant="h6" component="h2">
-                        ReportId: {reportModal}
-                    </Typography>*/}
                 </Box>
             </Modal>
             <NavBar />
