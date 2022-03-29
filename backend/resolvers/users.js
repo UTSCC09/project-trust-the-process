@@ -2,19 +2,24 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-import { checkAlphanumeric, checkEmail } from 'securityUtils';
+import { checkAlphanumeric, checkEmail, sanitizeContent } from 'securityUtils';
 
 module.exports = {
     Mutation: {
         registerUser: async (_, {firstName, lastName, email, password}) => {
             try {
-                if(!checkAlphanumeric(firstName) || !checkEmail(email) || !password) {
+                if(!checkAlphanumeric(firstName) || !checkAlphanumeric(lastName) || !checkEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
                         message: `At least one of firstName, email, or password is invalid`,
                         statusCode: 401
                     };
                 }
+                
+                firstName = sanitizeContent(firstName);
+                lastName = sanitizeContent(lastName);
+                email = sanitizeContent(email);
+                password = sanitizeContent(password);
 
                 const user = await User.findOne({email: email});
                 if(user) {
@@ -59,6 +64,9 @@ module.exports = {
                         statusCode: 401
                     };
                 }
+
+                email = sanitizeContent(email);
+                password = sanitizeContent(password);
 
                 const user = await User.findOne({email: email});
                 if(!user) {

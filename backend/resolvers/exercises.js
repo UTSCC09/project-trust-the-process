@@ -1,7 +1,7 @@
 const Exercise = require("../models/exercise");
 const Report = require("../models/report");
 
-import { checkAlphanumeric, checkObjectId } from 'securityUtils';
+import { checkAlphanumeric, checkNumeric, checkObjectId, sanitizeContent } from 'securityUtils';
 
 module.exports = {
     Mutation: {
@@ -15,13 +15,18 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(reportId) || !checkAlphanumeric(exerciseName) || !checkAlphanumeric(duration) || !checkAlphanumeric(order)) {
+                if(!checkObjectId(reportId) || !checkAlphanumeric(exerciseName) || !checkNumeric(duration) || !checkNumeric(order)) {
                     return {
                         __typename: "ExerciseFail",
                         message: `At least one of reportId, exerciseName, duration, or order is invalid`,
                         statusCode: 401
                     };
                 }
+
+                reportId = sanitizeContent(reportId);
+                exerciseName = sanitizeContent(exerciseName);
+                duration = sanitizeContent(duration);
+                order = sanitizeContent(order);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {
@@ -76,6 +81,8 @@ module.exports = {
                         statusCode: 401
                     };
                 }
+
+                exerciseId = sanitizeContent(exerciseId);
 
                 const exercise = await Exercise.findOne({_id: exerciseId});
                 if(!exercise) {

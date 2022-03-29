@@ -1,7 +1,7 @@
 const Report = require("../models/report");
 const User = require("../models/user");
 
-import { checkAlphanumeric, checkObjectId } from 'securityUtils';
+import { checkAlphanumeric, checkAlphabetic, checkNumeric, checkObjectId, sanitizeContent } from 'securityUtils';
 
 module.exports = {
     Mutation: {
@@ -22,6 +22,8 @@ module.exports = {
                         statusCode: 401
                     };
                 }
+
+                userId = sanitizeContent(userId);
 
                 const user = await User.findOne({_id: userId});
                 if(!user) {
@@ -71,13 +73,17 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(userId) || !checkAlphanumeric(month) || !checkAlphanumeric(year)) {
+                if(!checkObjectId(userId) || !checkAlphabetic(month) || !checkNumeric(year)) {
                     return {
                         __typename: "ReportFail",
                         message: `At least one of userId, month, or year is invalid`,
                         statusCode: 401
                     };
                 }
+
+                userId = sanitizeContent(userId);
+                month = sanitizeContent(month);
+                year = sanitizeContent(year);
 
                 const reports = await Report.find({"userId": userId});
                 if(!reports) {
@@ -130,6 +136,9 @@ module.exports = {
                     };
                 }
 
+                userId = sanitizeContent(userId);
+                date = sanitizeContent(date);
+
                 const reports = await Report.find({"userId": userId, "date": date});
                 if(!reports) {
                     return {
@@ -178,6 +187,8 @@ module.exports = {
                     };
                 }
 
+                reportId = sanitizeContent(reportId);
+
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {
                     return {
@@ -224,6 +235,8 @@ module.exports = {
                         statusCode: 401
                     };
                 }
+
+                reportId = sanitizeContent(reportId);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {

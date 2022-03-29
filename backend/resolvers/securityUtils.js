@@ -5,11 +5,14 @@ const checkAlphanumeric = function(param) {
     return true;
 };
 
-const sanitizeContent = function(param) {
-    param = validator.escape(param);
-    param = validator.trim(param);
+const checkAlphabetic = function(param) {
+    if (!validator.isAlpha(param)) return false;
+    return true;
+};
 
-    return param;
+const checkNumeric = function(param) {
+    if (!validator.isNumeric(param)) return false;
+    return true;
 };
 
 const checkEmail = function(param) {
@@ -20,4 +23,10 @@ const checkEmail = function(param) {
 const checkObjectId = function(param) {
     if (!validator.isMongoId(param)) return false;
     return true;
+};
+
+const sanitizeContent = function(param) {
+    param = validator.escape(param);
+    param = validator.trim(param);
+    return param;
 };
