@@ -74,6 +74,7 @@ const SIGN_UP = gql`
 export default function SignInUp({
     view,
     client,
+    onLogin,
     ...props
 }) {
 	const classes = useStyles(props)
@@ -95,6 +96,7 @@ export default function SignInUp({
         if (data.loginUser.statusCode == 200) {
           setErrorMsg('')
           setShowError(false)
+          onLogin(data.loginUser.token)
           navigate('/dashboard')
         }
         else {

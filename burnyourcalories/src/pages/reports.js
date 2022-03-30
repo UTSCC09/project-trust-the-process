@@ -74,6 +74,7 @@ const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
 
 export default function Reports({
     view,
+    onLogout,
     ...props
 }) {
 	const classes = useStyles(props)
@@ -116,7 +117,7 @@ export default function Reports({
                     <ReportViz reportId = {reportModal}/>
                 </Box>
             </Modal>
-            <NavBar />
+            <NavBar onLogout={onLogout} />
             <Box className={classes.body}>
                 <Box className={classes.select}>
                     <Alert severity={'info'}>Select a date below to see your reports populated on the right side. Dates with the 🟢 mean you have report(s) available for that day.</Alert>
