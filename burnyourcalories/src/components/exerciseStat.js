@@ -27,11 +27,11 @@ export default function ExerciseStat(props) {
 
     return (
         <Container component="main" maxWidth="xs">
-            <Box sx={{ width: 400, height: 50, border: 2}} className={classes.exerciseStyle}>
-                <Typography variant="h6" >
+            <Box sx={{ width: 400, height: 50, borderBottom: 2.5}} className={classes.exerciseStyle}>
+                <Typography variant="h5" >
                     {exerciseName}
 				</Typography>
-                <Typography variant="h6" >
+                <Typography variant="h5" >
                     {duration}
 				</Typography>
             </Box>
