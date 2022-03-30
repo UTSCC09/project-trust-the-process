@@ -58,7 +58,9 @@ export default function LiveStatistic(props) {
           </Typography>
 
           {paginatedExercises.length === 0 ? (
-            <h2>No exercises added yet, try adding some.</h2>
+            <Typography pt={1} textAlign={'center'} variant="h5">
+              No exercises added yet.
+            </Typography>
           ) : (
             paginatedExercises.map((exercise, idx) => (
               <ExerciseStat
