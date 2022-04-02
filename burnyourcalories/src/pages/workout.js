@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Workout({
     view,
+	onLogout,
     ...props
 }) {
 	const classes = useStyles(props);
@@ -55,7 +56,7 @@ export default function Workout({
 
 	return (
         <Container className={classes.root}>
-			<NavBar />
+			<NavBar onLogout={onLogout} />
 			<Container className={classes.body}>
 				<Video view={view} updateExercises={setExercises} getReportId={setReportId}/>
 				<LiveStatistic exercises={exercises} totalDuration={totalDuration}/>
