@@ -1,14 +1,15 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-import { checkAlphanumeric, checkEmail, sanitizeContent } from 'securityUtils';
+const validator = require('validator');
 
 module.exports = {
+    
     Mutation: {
         registerUser: async (_, {firstName, lastName, email, password}) => {
             try {
-                if(!checkAlphanumeric(firstName) || !checkAlphanumeric(lastName) || !checkEmail(email) || !password) {
+                console.log("register");
+                if(!validator.isAlphanumeric(firstName) || !validator.isAlphanumeric(lastName) || !validator.isEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
                         message: `At least one of firstName, email, or password is invalid`,
@@ -16,10 +17,21 @@ module.exports = {
                     };
                 }
                 
-                firstName = sanitizeContent(firstName);
-                lastName = sanitizeContent(lastName);
-                email = sanitizeContent(email);
-                password = sanitizeContent(password);
+                // firstName = sanitizeContent(firstName);
+                firstName = validator.escape(firstName);
+                firstName = validator.trim(firstName);
+
+                // lastName = sanitizeContent(lastName);
+                lastName = validator.escape(lastName);
+                lastName = validator.trim(lastName);
+
+                // email = sanitizeContent(email);
+                email = validator.escape(email);
+                email = validator.trim(email);
+
+                // password = sanitizeContent(password);
+                password = validator.escape(password);
+                password = validator.trim(password);
 
                 const user = await User.findOne({email: email});
                 if(user) {
@@ -57,7 +69,8 @@ module.exports = {
 
         loginUser: async (_, {email, password}) => {
             try {
-                if(!checkEmail(email) || !password) {
+                console.log("login");
+                if(!validator.isEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
                         message: `At least one of firstName, email, or password is invalid`,
@@ -65,8 +78,13 @@ module.exports = {
                     };
                 }
 
-                email = sanitizeContent(email);
-                password = sanitizeContent(password);
+                // email = sanitizeContent(email);
+                email = validator.escape(email);
+                email = validator.trim(email);
+
+                // password = sanitizeContent(password);
+                password = validator.escape(password);
+                password = validator.trim(password);
 
                 const user = await User.findOne({email: email});
                 if(!user) {

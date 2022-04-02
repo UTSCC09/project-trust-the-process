@@ -1,13 +1,11 @@
 const Exercise = require("../models/exercise");
 const Report = require("../models/report");
 
-import { checkAlphanumeric, checkNumeric, checkObjectId, sanitizeContent } from 'securityUtils';
-
 module.exports = {
     Mutation: {
         addExercise: async (_, {reportId, exerciseName, duration, order}, context) => {
             try {
-                if(!checkObjectId(context.id)) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ExerciseFail",
                         message: `Invalid auth token`,
@@ -15,7 +13,7 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(reportId) || !checkAlphanumeric(exerciseName) || !checkNumeric(duration) || !checkNumeric(order)) {
+                if(!validator.isMongoId(reportId) || !validator.isAlphanumeric(exerciseName) || !validator.isNumeric(duration) || !validator.isNumeric(order)) {
                     return {
                         __typename: "ExerciseFail",
                         message: `At least one of reportId, exerciseName, duration, or order is invalid`,
@@ -23,10 +21,21 @@ module.exports = {
                     };
                 }
 
-                reportId = sanitizeContent(reportId);
-                exerciseName = sanitizeContent(exerciseName);
-                duration = sanitizeContent(duration);
-                order = sanitizeContent(order);
+                // reportId = sanitizeContent(reportId);
+                reportId = validator.escape(reportId);
+                reportId = validator.trim(reportId);
+
+                // exerciseName = sanitizeContent(exerciseName);
+                exerciseName = validator.escape(exerciseName);
+                exerciseName = validator.trim(exerciseName);
+
+                // duration = sanitizeContent(duration);
+                duration = validator.escape(duration);
+                duration = validator.trim(duration);
+
+                // order = sanitizeContent(order);
+                order = validator.escape(order);
+                order = validator.trim(order);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {
@@ -67,14 +76,14 @@ module.exports = {
 
         getExercise: async (_, {exerciseId}, context) => {
             try {
-                if(!checkObjectId(context.id)) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ExerciseFail",
                         message: `Invalid auth token`,
                         statusCode: 401
                     };
                 }
-                if(!checkObjectId(exerciseId)) {
+                if(!validator.isMongoId(exerciseId)) {
                     return {
                         __typename: "ExerciseFail",
                         message: `exerciseId is invalid`,
@@ -82,7 +91,9 @@ module.exports = {
                     };
                 }
 
-                exerciseId = sanitizeContent(exerciseId);
+                // exerciseId = sanitizeContent(exerciseId);
+                exerciseId = validator.escape(exerciseId);
+                exerciseId = validator.trim(exerciseId);
 
                 const exercise = await Exercise.findOne({_id: exerciseId});
                 if(!exercise) {

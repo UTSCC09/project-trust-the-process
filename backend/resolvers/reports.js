@@ -1,13 +1,12 @@
 const Report = require("../models/report");
 const User = require("../models/user");
-
-import { checkAlphanumeric, checkAlphabetic, checkNumeric, checkObjectId, sanitizeContent } from 'securityUtils';
+const validator = require('validator');
 
 module.exports = {
     Mutation: {
         initReport: async (_, {userId}, context) => {
             try {
-                if(!checkObjectId(context.id)) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
                         message: `Invalid auth token`,
@@ -15,7 +14,7 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(userId)) {
+                if(!validator.isMongoId(userId)) {
                     return {
                         __typename: "ReportFail",
                         message: `userId is invalid`,
@@ -23,7 +22,9 @@ module.exports = {
                     };
                 }
 
-                userId = sanitizeContent(userId);
+                // userId = sanitizeContent(userId);
+                userId = validator.escape(userId);
+                userId = validator.trim(userId);
 
                 const user = await User.findOne({_id: userId});
                 if(!user) {
@@ -65,7 +66,7 @@ module.exports = {
 
         getUserReportDates: async (_, {userId, month, year}, context) => {
             try {
-                if(!checkObjectId(context.id)) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
                         message: `Invalid auth token`,
@@ -73,7 +74,7 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(userId) || !checkAlphabetic(month) || !checkNumeric(year)) {
+                if(!validator.isMongoId(userId) || !validator.isAlpha(month) || !validator.isNumeric(year)) {
                     return {
                         __typename: "ReportFail",
                         message: `At least one of userId, month, or year is invalid`,
@@ -81,9 +82,17 @@ module.exports = {
                     };
                 }
 
-                userId = sanitizeContent(userId);
-                month = sanitizeContent(month);
-                year = sanitizeContent(year);
+                // userId = sanitizeContent(userId);
+                userId = validator.escape(userId);
+                userId = validator.trim(userId);
+
+                // month = sanitizeContent(month);
+                month = validator.escape(month);
+                month = validator.trim(month);
+
+                // year = sanitizeContent(year);
+                year = validator.escape(year);
+                year = validator.trim(year);
 
                 const reports = await Report.find({"userId": userId});
                 if(!reports) {
@@ -120,7 +129,7 @@ module.exports = {
 
         getReportTimesByDate: async (_, {userId, date}, context) => {
             try {
-                if(!checkObjectId(context.id)) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
                         message: `Invalid auth token`,
@@ -128,7 +137,7 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(userId) || !checkAlphanumeric(date)) {
+                if(!validator.isMongoId(userId) || !validator.isAlphanumeric(date)) {
                     return {
                         __typename: "ReportFail",
                         message: `At least one of userId, or date is invalid`,
@@ -136,8 +145,13 @@ module.exports = {
                     };
                 }
 
-                userId = sanitizeContent(userId);
-                date = sanitizeContent(date);
+                // userId = sanitizeContent(userId);
+                userId = validator.escape(userId);
+                userId = validator.trim(userId);
+
+                // date = sanitizeContent(date);
+                date = validator.escape(date);
+                date = validator.trim(date);
 
                 const reports = await Report.find({"userId": userId, "date": date});
                 if(!reports) {
@@ -171,7 +185,7 @@ module.exports = {
 
         getReportById: async (_, {reportId}, context) => {
             try {
-                if(!checkObjectId(context.id)) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
                         message: `Invalid auth token`,
@@ -179,7 +193,7 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(reportId)) {
+                if(!validator.isMongoId(reportId)) {
                     return {
                         __typename: "ReportFail",
                         message: `reportId is inavlid`,
@@ -187,7 +201,9 @@ module.exports = {
                     };
                 }
 
-                reportId = sanitizeContent(reportId);
+                // reportId = sanitizeContent(reportId);
+                reportId = validator.escape(reportId);
+                reportId = validator.trim(reportId);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {
@@ -220,7 +236,7 @@ module.exports = {
 
         endReport: async (_, {reportId}, context) => {
             try {
-                if(!checkObjectId(context.id)) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
                         message: `Invalid auth token`,
@@ -228,7 +244,7 @@ module.exports = {
                     };
                 }
 
-                if(!checkObjectId(reportId)) {
+                if(!validator.isMongoId(reportId)) {
                     return {
                         __typename: "ReportFail",
                         message: `reportId is invalid`,
@@ -236,7 +252,9 @@ module.exports = {
                     };
                 }
 
-                reportId = sanitizeContent(reportId);
+                // reportId = sanitizeContent(reportId);
+                reportId = validator.escape(reportId);
+                reportId = validator.trim(reportId);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {
