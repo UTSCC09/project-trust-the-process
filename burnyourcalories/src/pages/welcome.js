@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Welcome({
     view,
+	onLogin,
     ...props
 }) {
 	const classes = useStyles(props)
@@ -45,7 +46,7 @@ export default function Welcome({
 
 	return (
         <Container maxWidth='xs' className={classes.root}>
-            <SignInUp view={view}/>
+            <SignInUp view={view} onLogin={onLogin} />
         </Container>
 	)
 }

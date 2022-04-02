@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard({
     view,
+	onLogout,
     ...props
 }) {
 	const classes = useStyles(props)
@@ -45,7 +46,7 @@ export default function Dashboard({
 
 	return (
         <Container maxWidth='xs' className={classes.root}>
-            <NavBar />
+            <NavBar onLogout={onLogout} />
             <Typography variant='h4' textAlign={'center'} mt={5} color={'#F0EFEE'}>
                 Choose an option:
             </Typography>

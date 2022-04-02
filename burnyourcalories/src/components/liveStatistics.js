@@ -14,6 +14,10 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+    backgroundColor: '#C9C9BD',
+  },
+  duration: {    
+    paddingTop: '12px',
   },
   alert: {
     marginBottom: '10px',
@@ -22,7 +26,7 @@ const useStyles = makeStyles(() => ({
 
 LiveStatistic.defaultProps = {
   exercise: [],
-  totalDuration: 599
+  totalDuration: 0
 };
 
 export default function LiveStatistic(props) {
@@ -54,7 +58,9 @@ export default function LiveStatistic(props) {
           </Typography>
 
           {paginatedExercises.length === 0 ? (
-            <h2>No exercises added yet, try adding some.</h2>
+            <Typography pt={1} textAlign={'center'} variant="h5">
+              No exercises added yet.
+            </Typography>
           ) : (
             paginatedExercises.map((exercise, idx) => (
               <ExerciseStat
@@ -62,8 +68,7 @@ export default function LiveStatistic(props) {
               />
             ))
           )}
-          
-          <Typography variant="h6">
+          <Typography className={classes.duration} variant="h5">
             {secondsToTime(totalDuration)}
           </Typography>
         </Box>
