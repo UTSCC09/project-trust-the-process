@@ -22,7 +22,6 @@ module.exports = {
                     };
                 }
 
-                // userId = sanitizeContent(userId);
                 userId = validator.escape(userId);
                 userId = validator.trim(userId);
 
@@ -82,15 +81,12 @@ module.exports = {
                     };
                 }
 
-                // userId = sanitizeContent(userId);
                 userId = validator.escape(userId);
                 userId = validator.trim(userId);
 
-                // month = sanitizeContent(month);
                 month = validator.escape(month);
                 month = validator.trim(month);
 
-                // year = sanitizeContent(year);
                 year = validator.escape(year);
                 year = validator.trim(year);
 
@@ -137,7 +133,7 @@ module.exports = {
                     };
                 }
 
-                if(!validator.isMongoId(userId) || !validator.isAlphanumeric(date)) {
+                if(!validator.isMongoId(userId) || validator.isEmpty(date)) {
                     return {
                         __typename: "ReportFail",
                         message: `At least one of userId, or date is invalid`,
@@ -145,11 +141,9 @@ module.exports = {
                     };
                 }
 
-                // userId = sanitizeContent(userId);
                 userId = validator.escape(userId);
                 userId = validator.trim(userId);
 
-                // date = sanitizeContent(date);
                 date = validator.escape(date);
                 date = validator.trim(date);
 
@@ -201,7 +195,6 @@ module.exports = {
                     };
                 }
 
-                // reportId = sanitizeContent(reportId);
                 reportId = validator.escape(reportId);
                 reportId = validator.trim(reportId);
 
@@ -252,7 +245,6 @@ module.exports = {
                     };
                 }
 
-                // reportId = sanitizeContent(reportId);
                 reportId = validator.escape(reportId);
                 reportId = validator.trim(reportId);
 

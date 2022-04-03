@@ -17,19 +17,15 @@ module.exports = {
                     };
                 }
                 
-                // firstName = sanitizeContent(firstName);
                 firstName = validator.escape(firstName);
                 firstName = validator.trim(firstName);
 
-                // lastName = sanitizeContent(lastName);
                 lastName = validator.escape(lastName);
                 lastName = validator.trim(lastName);
 
-                // email = sanitizeContent(email);
                 email = validator.escape(email);
                 email = validator.trim(email);
 
-                // password = sanitizeContent(password);
                 password = validator.escape(password);
                 password = validator.trim(password);
 
@@ -78,11 +74,9 @@ module.exports = {
                     };
                 }
 
-                // email = sanitizeContent(email);
                 email = validator.escape(email);
                 email = validator.trim(email);
 
-                // password = sanitizeContent(password);
                 password = validator.escape(password);
                 password = validator.trim(password);
 
