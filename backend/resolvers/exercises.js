@@ -1,17 +1,38 @@
 const Exercise = require("../models/exercise");
 const Report = require("../models/report");
+const validator = require('validator');
 
 module.exports = {
     Mutation: {
-        addExercise: async (_, {reportId, exerciseName, duration, order}) => {
+        addExercise: async (_, {reportId, exerciseName, duration, order}, context) => {
             try {
-                if(!reportId || !exerciseName || !duration || !order) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ExerciseFail",
-                        message: `At least one of reportId, exerciseName, duration, or order is missing`,
+                        message: `Invalid auth token`,
                         statusCode: 401
                     };
                 }
+
+                if(!validator.isMongoId(reportId) || validator.isEmpty(exerciseName) || !validator.isNumeric(duration) || !validator.isNumeric(order)) {
+                    return {
+                        __typename: "ExerciseFail",
+                        message: `At least one of reportId, exerciseName, duration, or order is invalid`,
+                        statusCode: 401
+                    };
+                }
+
+                reportId = validator.escape(reportId);
+                reportId = validator.trim(reportId);
+
+                exerciseName = validator.escape(exerciseName);
+                exerciseName = validator.trim(exerciseName);
+
+                duration = validator.escape(duration);
+                duration = validator.trim(duration);
+
+                order = validator.escape(order);
+                order = validator.trim(order);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {
@@ -50,15 +71,26 @@ module.exports = {
             }
         },
 
-        getExercise: async (_, {exerciseId}) => {
+        getExercise: async (_, {exerciseId}, context) => {
             try {
-                if(!exerciseId) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ExerciseFail",
-                        message: `exerciseId is missing`,
+                        message: `Invalid auth token`,
                         statusCode: 401
                     };
                 }
+
+                if(!validator.isMongoId(exerciseId)) {
+                    return {
+                        __typename: "ExerciseFail",
+                        message: `exerciseId is invalid`,
+                        statusCode: 401
+                    };
+                }
+
+                exerciseId = validator.escape(exerciseId);
+                exerciseId = validator.trim(exerciseId);
 
                 const exercise = await Exercise.findOne({_id: exerciseId});
                 if(!exercise) {
