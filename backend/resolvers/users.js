@@ -8,7 +8,6 @@ module.exports = {
     Mutation: {
         registerUser: async (_, {firstName, lastName, email, password}) => {
             try {
-                console.log("register");
                 if(!validator.isAlphanumeric(firstName) || !validator.isAlphanumeric(lastName) || !validator.isEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
@@ -65,7 +64,6 @@ module.exports = {
 
         loginUser: async (_, {email, password}) => {
             try {
-                console.log("login");
                 if(!validator.isEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
