@@ -8,6 +8,7 @@ import {
   HttpLink,
   InMemoryCache,
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,19 +19,32 @@ import Workout from './pages/workout';
 import Dashboard from './pages/dashboard';
 import Reports from './pages/reports';
 
+const httpLink = new HttpLink({
+  uri: 'http://localhost:3001',
+});
+
+// REFERENCE: https://www.apollographql.com/docs/react/networking/authentication/
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("c09-token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `${token}` : "",
+    }
+  };
+});
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: 'http://localhost:3001',
-  })
-})
+  link: authLink.concat(httpLink)
+});
 
 const PrivateRoute = () => {
   // REFERENCE: https://stackoverflow.com/questions/69864165/error-privateroute-is-not-a-route-component-all-component-children-of-rou
 
   let auth = false
 
-  if (localStorage.getItem("token") != null) {
+  if (localStorage.getItem("c09-token") != null) {
     auth = true
   }
   
@@ -42,7 +56,7 @@ const PrivateRoute = () => {
 const SignRoute = () => {
   let auth = true
 
-  if (localStorage.getItem("token") == null) {
+  if (localStorage.getItem("c09-token") == null) {
     auth = false
   }
 
@@ -55,13 +69,13 @@ function App() {
 
   const handleLogin = (token) => {
     setToken(token)
-    localStorage.setItem("token", token)
+    localStorage.setItem("c09-token", token)
     setLoggedIn(true)
   }
 
   const handleLogout = () => {
     setToken(null)
-    localStorage.clear()
+    localStorage.removeItem("c09-token")
     setLoggedIn(false)
   }
 

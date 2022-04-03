@@ -4,14 +4,21 @@ const { ApolloServer} = require('apollo-server');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const mongoose = require('mongoose');
+const jwt = require("jsonwebtoken");
 
+// REFERENCE: https://www.apollographql.com/docs/apollo-server/security/authentication/
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
     const token = req.headers.authorization || '';
-    const user = jwt.verify(token, "burnYourCalories");
-    return { user };
+    try {
+      const user = jwt.verify(token, "burnYourCalories");
+      return { id: user.id };
+    }
+    catch(err) {
+      console.log(err);
+    }
   }
 });
 
