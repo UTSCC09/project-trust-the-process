@@ -61,7 +61,7 @@ const GET_USER_REPORT_DATES = gql`
   }
 `
 
-const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
+// const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
 
 const initialValue = new Date();
 
@@ -89,6 +89,7 @@ export default function ReportCalendar({
         let dateBroken = date.toString().split(' ')
         let month = dateBroken[1]
         let year = dateBroken[3]
+        let userId = localStorage.getItem("c09-userId")
         getHighlights({ variables: { userId, month, year } })
         .then((res) => {
             let toHighlight = []

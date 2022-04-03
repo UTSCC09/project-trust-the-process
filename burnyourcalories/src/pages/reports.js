@@ -70,7 +70,7 @@ const GET_REPORT_TIMES_BY_DATE = gql`
     }
 `
 
-const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
+// const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
 
 export default function Reports({
     view,
@@ -99,6 +99,7 @@ export default function Reports({
         if (selectedDate) {
             let dateBroken = selectedDate.toString().split(' ')
             let date = dateBroken[1] + " " + dateBroken[2] + " " + dateBroken[3]
+            let userId = localStorage.getItem("c09-userId")
             getReports({ variables: { userId, date } })
             .then((res) => {
                 setReports(res.data.getReportTimesByDate.times)

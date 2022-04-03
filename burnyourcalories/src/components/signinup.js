@@ -96,6 +96,8 @@ export default function SignInUp({
         if (data.loginUser.statusCode == 200) {
           setErrorMsg('')
           setShowError(false)
+          console.log(data.loginUser)
+          localStorage.setItem("c09-userId", '624815c7b65c705d9e575ba2')
           onLogin(data.loginUser.token)
           navigate('/dashboard')
         }
@@ -133,7 +135,7 @@ export default function SignInUp({
   })
 
   useEffect(() => {
-    if (email && view == 'signup') {
+    if (email) {
       setValidEmail(validateEmail(email))
     } else if (email == '') setValidEmail(true)
   }, [email])
@@ -174,7 +176,7 @@ export default function SignInUp({
   }
 
   function SubmitButton() {
-    if (email && password && view == 'signin') {
+    if (email && password && view == 'signin' && validEmail) {
       return (
         <LoadingButton
           type="submit"
@@ -285,17 +287,6 @@ export default function SignInUp({
                   />
                 )
               }
-              {/* <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={email}
-                onChange={ e => setEmail(e.target.value) }
-                variant='outlined'
-                id="email"
-                label="Email"
-                name="email"
-              /> */}
               <TextField
                 margin="normal"
                 required
