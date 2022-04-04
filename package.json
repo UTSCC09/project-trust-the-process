@@ -1,5 +1,5 @@
 {
     "scripts": {
-        "start": "node backend/server.js"
+        "postinstall": "npm install --prefix ./backend"
       }
 }
