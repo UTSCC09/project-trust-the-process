@@ -20,7 +20,6 @@ const INIT_REPORT = gql`
 let isReportInit = false;
 
 const Listening = ({loadModel, loadWebcam, startSession, stopSession, createReport}) => {
-    let report, reportId, userId = "623d4a099d89d0950438a820";
 
     const [initReport] = useMutation(INIT_REPORT, {
         onCompleted: (data) => {

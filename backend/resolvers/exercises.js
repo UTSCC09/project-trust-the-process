@@ -14,25 +14,19 @@ module.exports = {
                     };
                 }
 
-                if(!validator.isMongoId(reportId) || validator.isEmpty(exerciseName) || !validator.isNumeric(duration) || !validator.isNumeric(order)) {
+                if(!validator.isMongoId(reportId) || !exerciseName || !duration || !order) {
                     return {
                         __typename: "ExerciseFail",
                         message: `At least one of reportId, exerciseName, duration, or order is invalid`,
                         statusCode: 401
                     };
                 }
-
+                
                 reportId = validator.escape(reportId);
                 reportId = validator.trim(reportId);
 
                 exerciseName = validator.escape(exerciseName);
                 exerciseName = validator.trim(exerciseName);
-
-                duration = validator.escape(duration);
-                duration = validator.trim(duration);
-
-                order = validator.escape(order);
-                order = validator.trim(order);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {

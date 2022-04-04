@@ -19,6 +19,7 @@ const ADD_EXERCISE = gql`
 let order = 1;
 
 const PopulateReport = ({exercises, reportId}) => {
+    console.log(reportId);
     const [addExercise] = useMutation(ADD_EXERCISE, {
         onCompleted: (data) => {
             return data;
@@ -28,17 +29,21 @@ const PopulateReport = ({exercises, reportId}) => {
         }
     });
 
-    useEffect(() => {
+    useEffect(async () => {
         if((exercises.length > 0) && (reportId != '')) {
             const newExercise = exercises[exercises.length - 1];
             const exerciseName = newExercise.exerciseName;
             const duration = Number(newExercise.duration);
 
-            console.log(reportId, exerciseName, duration, order);
-    
+            await addExercise({variables: {reportId, exerciseName, duration, order}});
+            order += 1;
+          
+            /*
             addExercise({variables: {reportId, exerciseName, duration, order}}).then((res) => {
+              console.log(res);
               order += 1;
             });
+            */
         }
     }, [exercises])
 

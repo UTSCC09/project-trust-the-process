@@ -1,4 +1,4 @@
-// https://github.com/yining1023/teachable-machine-p5/blob/master/poseclassifier/poseclassifier-on-webcam/sketch.js
+// Credit: https://github.com/yining1023/teachable-machine-p5/blob/master/poseclassifier/poseclassifier-on-webcam/sketch.js
 
 import { useEffect, useState } from "react";
 import Sketch from 'react-p5';
@@ -36,7 +36,7 @@ let myCanvas;
 let ctx;
 let startTime, endTime, duration, prevExercise = "", newExercise = "";
 let count = 0;
-let report, reportId, userId = "623d4a099d89d0950438a820";
+let report, reportId, userId = localStorage.getItem("c09-userId");
 
 const INIT_REPORT = gql`
   mutation {
