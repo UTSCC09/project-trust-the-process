@@ -133,7 +133,7 @@ export default function SignInUp({
   })
 
   useEffect(() => {
-    if (email && view == 'signup') {
+    if (email) {
       setValidEmail(validateEmail(email))
     } else if (email == '') setValidEmail(true)
   }, [email])
@@ -174,7 +174,7 @@ export default function SignInUp({
   }
 
   function SubmitButton() {
-    if (email && password && view == 'signin') {
+    if (email && password && view == 'signin' && validEmail) {
       return (
         <LoadingButton
           type="submit"

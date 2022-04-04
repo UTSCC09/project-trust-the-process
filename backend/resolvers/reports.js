@@ -4,7 +4,7 @@ const validator = require('validator');
 
 module.exports = {
     Mutation: {
-        initReport: async (_, {userId}, context) => {
+        initReport: async (_, args, context) => {
             try {
                 if(!validator.isMongoId(context.id)) {
                     return {
@@ -14,16 +14,7 @@ module.exports = {
                     };
                 }
 
-                if(!validator.isMongoId(userId)) {
-                    return {
-                        __typename: "ReportFail",
-                        message: `userId is invalid`,
-                        statusCode: 401
-                    };
-                }
-
-                userId = validator.escape(userId);
-                userId = validator.trim(userId);
+                let userId = context.id;
 
                 const user = await User.findOne({_id: userId});
                 if(!user) {
@@ -63,7 +54,7 @@ module.exports = {
             }
         },
 
-        getUserReportDates: async (_, {userId, month, year}, context) => {
+        getUserReportDates: async (_, {month, year}, context) => {
             try {
                 if(!validator.isMongoId(context.id)) {
                     return {
@@ -73,16 +64,15 @@ module.exports = {
                     };
                 }
 
-                if(!validator.isMongoId(userId) || !validator.isAlpha(month) || !validator.isNumeric(year)) {
+                let userId = context.id;
+
+                if(!validator.isAlpha(month) || !validator.isNumeric(year)) {
                     return {
                         __typename: "ReportFail",
                         message: `At least one of userId, month, or year is invalid`,
                         statusCode: 401
                     };
                 }
-
-                userId = validator.escape(userId);
-                userId = validator.trim(userId);
 
                 month = validator.escape(month);
                 month = validator.trim(month);
@@ -123,7 +113,7 @@ module.exports = {
             }
         },
 
-        getReportTimesByDate: async (_, {userId, date}, context) => {
+        getReportTimesByDate: async (_, {date}, context) => {
             try {
                 if(!validator.isMongoId(context.id)) {
                     return {
@@ -133,16 +123,15 @@ module.exports = {
                     };
                 }
 
-                if(!validator.isMongoId(userId) || validator.isEmpty(date)) {
+                let userId = context.id;
+
+                if(validator.isEmpty(date)) {
                     return {
                         __typename: "ReportFail",
                         message: `At least one of userId, or date is invalid`,
                         statusCode: 401
                     };
                 }
-
-                userId = validator.escape(userId);
-                userId = validator.trim(userId);
 
                 date = validator.escape(date);
                 date = validator.trim(date);
