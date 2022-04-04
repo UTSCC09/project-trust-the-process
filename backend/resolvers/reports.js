@@ -1,17 +1,20 @@
 const Report = require("../models/report");
 const User = require("../models/user");
+const validator = require('validator');
 
 module.exports = {
     Mutation: {
-        initReport: async (_, {userId}) => {
+        initReport: async (_, args, context) => {
             try {
-                if(!userId) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `userId is missing`,
+                        message: `Invalid auth token`,
                         statusCode: 401
                     };
                 }
+
+                let userId = context.id;
 
                 const user = await User.findOne({_id: userId});
                 if(!user) {
@@ -51,21 +54,144 @@ module.exports = {
             }
         },
 
-        getReportByDate: async (_, {userId, date}) => {
+        getUserReportDates: async (_, {month, year}, context) => {
             try {
-                if(!userId || !date) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `At least one of userId, or date is missing`,
+                        message: `Invalid auth token`,
                         statusCode: 401
                     };
                 }
 
-                const report = await Report.findOne({"userId": userId, "date": date});
-                if(!report) {
+                let userId = context.id;
+
+                if(!validator.isAlpha(month) || !validator.isNumeric(year)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `At least one of userId, month, or year is invalid`,
+                        statusCode: 401
+                    };
+                }
+
+                month = validator.escape(month);
+                month = validator.trim(month);
+
+                year = validator.escape(year);
+                year = validator.trim(year);
+
+                const reports = await Report.find({"userId": userId});
+                if(!reports) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `The report with userId ${userId} cannot be found`,
+                        statusCode: 404
+                    };
+                }
+
+                let userDates = [];
+
+                reports.forEach(function (report, _) {
+                    if (report.date.includes(month) && report.date.includes(year)) {
+                        userDates.push(report.date);
+                    } 
+                });
+                userDates.sort();
+
+                return {
+                    __typename: "UserReportDates",
+                    dates: userDates,
+                    statusCode: 200
+                };
+            }
+            catch(err) {
+                return {
+                    __typename: "ReportFail",
+                    message: `${error}`,
+                    statusCode: 500
+                };
+            }
+        },
+
+        getReportTimesByDate: async (_, {date}, context) => {
+            try {
+                if(!validator.isMongoId(context.id)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                let userId = context.id;
+
+                if(validator.isEmpty(date)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `At least one of userId, or date is invalid`,
+                        statusCode: 401
+                    };
+                }
+
+                date = validator.escape(date);
+                date = validator.trim(date);
+
+                const reports = await Report.find({"userId": userId, "date": date});
+                if(!reports) {
                     return {
                         __typename: "ReportFail",
                         message: `The report with userId ${userId} and date ${date} cannot be found`,
+                        statusCode: 404
+                    };
+                }
+
+                let workoutTimes = [];
+
+                reports.forEach(function (report, _) {
+                    workoutTimes.push({startTime: report.startTime, endTime: report.endTime, reportId: report._id});
+                });
+                
+                return {
+                    __typename: "ReportTimes",
+                    times: workoutTimes,
+                    statusCode: 200
+                };
+            }
+            catch(err) {
+                return {
+                    __typename: "ReportFail",
+                    message: `${error}`,
+                    statusCode: 500
+                };
+            }
+        },
+
+        getReportById: async (_, {reportId}, context) => {
+            try {
+                if(!validator.isMongoId(context.id)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `Invalid auth token`,
+                        statusCode: 401
+                    };
+                }
+
+                if(!validator.isMongoId(reportId)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `reportId is inavlid`,
+                        statusCode: 401
+                    };
+                }
+
+                reportId = validator.escape(reportId);
+                reportId = validator.trim(reportId);
+
+                const report = await Report.findOne({_id: reportId});
+                if(!report) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `The report with reportId ${reportId} cannot be found`,
                         statusCode: 404
                     };
                 }
@@ -90,15 +216,26 @@ module.exports = {
             }
         },
 
-        endReport: async (_, {reportId}) => {
+        endReport: async (_, {reportId}, context) => {
             try {
-                if(!reportId) {
+                if(!validator.isMongoId(context.id)) {
                     return {
                         __typename: "ReportFail",
-                        message: `reportId is missing`,
+                        message: `Invalid auth token`,
                         statusCode: 401
                     };
                 }
+
+                if(!validator.isMongoId(reportId)) {
+                    return {
+                        __typename: "ReportFail",
+                        message: `reportId is invalid`,
+                        statusCode: 401
+                    };
+                }
+
+                reportId = validator.escape(reportId);
+                reportId = validator.trim(reportId);
 
                 const report = await Report.findOne({_id: reportId});
                 if(!report) {

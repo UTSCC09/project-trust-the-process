@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar({
     view,
     client,
+    onLogout,
     ...props
 }) {
 	const classes = useStyles(props)
@@ -50,7 +51,10 @@ export default function NavBar({
                     <Link href={'/dashboard'} className={classes.title} underline={'none'}>
                         BurnYourCalories
                     </Link>
-                    <Button color="inherit" onClick={() => navigate('/signin')}>Sign out</Button>
+                    <Button color="inherit" onClick={() => {
+                        onLogout()
+                        navigate('/signin')
+                    }}>Sign out</Button>
                 </Toolbar>
             </AppBar>
         </Box>
