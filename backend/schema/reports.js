@@ -49,9 +49,9 @@ const Report = gql`
   union EndReportResult = ReportEnd | ReportFail
 
   type Mutation {
-    initReport(userId: String!): initReportResult!
-    getUserReportDates(userId: String!, month: String!, year: String!): UserReportDatesResult
-    getReportTimesByDate(userId: String!, date: String!): ReportsTimesResult!
+    initReport: initReportResult!
+    getUserReportDates(month: String!, year: String!): UserReportDatesResult
+    getReportTimesByDate(date: String!): ReportsTimesResult!
     getReportById(reportId: String!): ReportResult!
     endReport(reportId: String!): EndReportResult!
   }

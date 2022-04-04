@@ -12,12 +12,17 @@ const server = new ApolloServer({
   resolvers,
   context: ({ req }) => {
     const token = req.headers.authorization || '';
-    try {
-      const user = jwt.verify(token, "burnYourCalories");
-      return { id: user.id };
+    if (token) {
+      try {
+        const user = jwt.verify(token, "burnYourCalories");
+        return { id: user.id };
+      }
+      catch(err) {
+        console.log(err);
+      }
     }
-    catch(err) {
-      console.log(err);
+    else {
+      return null;
     }
   }
 });

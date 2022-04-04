@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const GET_REPORT_TIMES_BY_DATE = gql`
-    mutation($userId: String!, $date: String!) {
-        getReportTimesByDate(userId: $userId, date: $date) {
+    mutation($date: String!) {
+        getReportTimesByDate(date: $date) {
         ... on ReportFail {
             message,
             statusCode
@@ -69,8 +69,6 @@ const GET_REPORT_TIMES_BY_DATE = gql`
         }
     }
 `
-
-const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
 
 export default function Reports({
     view,
@@ -99,7 +97,7 @@ export default function Reports({
         if (selectedDate) {
             let dateBroken = selectedDate.toString().split(' ')
             let date = dateBroken[1] + " " + dateBroken[2] + " " + dateBroken[3]
-            getReports({ variables: { userId, date } })
+            getReports({ variables: { date } })
             .then((res) => {
                 setReports(res.data.getReportTimesByDate.times)
             })

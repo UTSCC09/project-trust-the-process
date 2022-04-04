@@ -47,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const GET_USER_REPORT_DATES = gql`
-    mutation($userId: String!, $month: String!, $year: String!) {
-        getUserReportDates(userId: $userId, month: $month, year: $year) {
+    mutation($month: String!, $year: String!) {
+        getUserReportDates(month: $month, year: $year) {
         ... on ReportFail {
             message,
             statusCode
@@ -60,8 +60,6 @@ const GET_USER_REPORT_DATES = gql`
     }
   }
 `
-
-const userId = '623d4a099d89d0950438a820' // DELETE LATER (TESTING ONLY)
 
 const initialValue = new Date();
 
@@ -89,7 +87,7 @@ export default function ReportCalendar({
         let dateBroken = date.toString().split(' ')
         let month = dateBroken[1]
         let year = dateBroken[3]
-        getHighlights({ variables: { userId, month, year } })
+        getHighlights({ variables: { month, year } })
         .then((res) => {
             let toHighlight = []
             for (const date of res.data.getUserReportDates.dates) {

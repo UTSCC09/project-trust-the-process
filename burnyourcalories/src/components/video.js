@@ -39,8 +39,8 @@ let count = 0;
 let report, reportId, userId = "623d4a099d89d0950438a820";
 
 const INIT_REPORT = gql`
-  mutation($userId: String!) {
-    initReport(userId: $userId) {
+  mutation {
+    initReport {
       ... on ReportFail {
         message,
         statusCode
