@@ -3,8 +3,8 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { useMutation, gql } from '@apollo/client';
 
 const INIT_REPORT = gql`
-  mutation($userId: String!) {
-    initReport(userId: $userId) {
+  mutation {
+    initReport {
       ... on ReportFail {
         message,
         statusCode
