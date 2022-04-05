@@ -36,7 +36,7 @@ let myCanvas;
 let ctx;
 let startTime, endTime, duration, prevExercise = "", newExercise = "";
 let count = 0;
-let report, reportId, userId = localStorage.getItem("c09-userId");
+let report, reportId; 
 
 const INIT_REPORT = gql`
   mutation {
@@ -53,6 +53,21 @@ const INIT_REPORT = gql`
   }
 `;
 
+const END_REPORT = gql`
+mutation($reportId: String!) {
+  endReport(reportId: $reportId) {
+    ... on ReportFail {
+      message,
+      statusCode
+    }
+    ... on ReportEnd {
+      endTime,
+      statusCode
+    }
+  }
+}
+`;
+
 const Video = ({getReportId, updateExercises, view, ...props}) => {
     const classes = useStyles(props);
 
@@ -64,6 +79,15 @@ const Video = ({getReportId, updateExercises, view, ...props}) => {
     const metadataURL = modelURL + "metadata.json";
 
     const [initReport] = useMutation(INIT_REPORT, {
+        onCompleted: (data) => {
+            return data;
+        },
+        onError: () => {
+            return null;
+        }
+    });
+
+    const [closeReport] = useMutation(END_REPORT, {
         onCompleted: (data) => {
             return data;
         },
@@ -97,11 +121,14 @@ const Video = ({getReportId, updateExercises, view, ...props}) => {
     }
 
     const createReport = async() => {
-        report = await initReport({variables: {userId}});
+        report = await initReport();
         if(report) {
             reportId = report.data.initReport.reportId;
             getReportId(reportId);
         }
+    }
+    const endReport = async() => {
+        await closeReport({variables: {reportId}});
     }
 
     const startSession = async() => {
@@ -112,8 +139,9 @@ const Video = ({getReportId, updateExercises, view, ...props}) => {
         window.requestAnimationFrame(loopWebcam);
     }
 
-    const stopSession = () => {
+    const stopSession = async() => {
         webcam.pause();
+        await endReport();
     }
 
     const startOrStopWebcam = async() => {
@@ -122,7 +150,7 @@ const Video = ({getReportId, updateExercises, view, ...props}) => {
            startSession();
         }
         else {
-            stopSession();
+            await stopSession();
             updateExercises([]);
             setButton('Start');
         }
