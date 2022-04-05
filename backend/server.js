@@ -17,6 +17,7 @@ const startServer = async() => {
     resolvers,
     context: ({ req }) => {
       const token = req.headers.authorization || '';
+      console.log("in context");
       if (token) {
         try {
           const user = jwt.verify(token, "burnYourCalories");
@@ -37,7 +38,7 @@ const startServer = async() => {
 
 startServer();
 
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT;
 const username = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
