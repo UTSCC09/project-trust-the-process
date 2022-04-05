@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SIGN_IN = gql`
-  mutation ($email: String!, $password: String!) {
+  mutation($email: String!, $password: String!) {
     loginUser(email: $email, password: $password) {
        ... on UserFail {
         message,
