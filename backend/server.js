@@ -37,7 +37,8 @@ const port = process.env.SERVER_PORT || 4000;
 const username = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
-const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+// const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const dbURI = `mongodb+srv://CSCC09:yb1zu4R8htKYypTM@burnyourcalories.s52wk.mongodb.net/BurnYourCalories?retryWrites=true&w=majority`;
 
 console.log(dbURI);
 
