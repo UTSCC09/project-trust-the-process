@@ -39,6 +39,7 @@ const password = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
 const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
+console.log(dbURI);
 
 console.log("server 4");
 
