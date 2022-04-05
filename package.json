@@ -1,5 +1,5 @@
 {
     "scripts": {
-        "start": "npm run dev --prefix ./backend"
+        "start": "npm install --prefix ./backend"
       }
 }
