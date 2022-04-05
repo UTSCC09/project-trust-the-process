@@ -13,7 +13,6 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
-import Shoppies from './pages/index';
 import Welcome from './pages/welcome';
 import Workout from './pages/workout';
 import Dashboard from './pages/dashboard';
