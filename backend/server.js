@@ -1,10 +1,14 @@
 require('dotenv').config();
 
+console.log("server 1");
+
 const { ApolloServer} = require('apollo-server');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
+
+console.log("server 2");
 
 // REFERENCE: https://www.apollographql.com/docs/apollo-server/security/authentication/
 const server = new ApolloServer({
@@ -27,11 +31,17 @@ const server = new ApolloServer({
   }
 });
 
-const port = process.env.SERVER_PORT;
+console.log("server 3");
+
+const port = process.env.SERVER_PORT || 4000;
 const username = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
 const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
+
+console.log("server 4");
+
 
 mongoose
     .connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
