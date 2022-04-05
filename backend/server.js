@@ -33,7 +33,7 @@ const server = new ApolloServer({
 
 console.log("server 3");
 
-const port = process.env.SERVER_PORT || 4000;
+const port = process.env.PORT || 4000;
 const username = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
