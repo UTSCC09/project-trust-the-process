@@ -38,11 +38,13 @@ const startServer = async() => {
 
 startServer();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 const username = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
-const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+// const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const dbURI = `mongodb+srv://CSCC09:yb1zu4R8htKYypTM@burnyourcalories.s52wk.mongodb.net/BurnYourCalories?retryWrites=true&w=majority`;
+
 
 mongoose.connect(dbURI, {useUnifiedTopology: true, useNewUrlParser: true}, err => {
   if (err){
