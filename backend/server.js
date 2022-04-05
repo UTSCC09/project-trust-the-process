@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+
 const { ApolloServer} = require('apollo-server-express');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
@@ -9,6 +10,8 @@ const app = require("express")();
 const cors = require('cors');
 
 app.use(cors({origin: '*'}));
+
+console.log("server 2");
 
 // REFERENCE: https://www.apollographql.com/docs/apollo-server/security/authentication/
 const startServer = async() => {
@@ -38,11 +41,18 @@ const startServer = async() => {
 
 startServer();
 
+
 const port = process.env.PORT;
 const username = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
-const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+// const dbURI = `mongodb+srv://${username}:${password}@burnyourcalories.s52wk.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const dbURI = `mongodb+srv://CSCC09:yb1zu4R8htKYypTM@burnyourcalories.s52wk.mongodb.net/BurnYourCalories?retryWrites=true&w=majority`;
+
+console.log(dbURI);
+
+console.log("server 4");
+
 
 mongoose.connect(dbURI, {useUnifiedTopology: true, useNewUrlParser: true}, err => {
   if (err){
