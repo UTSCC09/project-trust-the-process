@@ -1,4 +1,4 @@
-// Credit: https://github.com/yining1023/teachable-machine-p5/blob/master/poseclassifier/poseclassifier-on-webcam/sketch.js
+// REFERENCE: https://github.com/yining1023/teachable-machine-p5/blob/master/poseclassifier/poseclassifier-on-webcam/sketch.js
 
 import { useEffect, useState } from "react";
 import Sketch from 'react-p5';
