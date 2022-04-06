@@ -6,6 +6,7 @@ const resolvers = require('./resolvers');
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const cors = require('cors');
+const path = require("path");
 const express = require("express");
 
 const app = express();
@@ -34,6 +35,12 @@ const startServer = async() => {
     }
   });
   await server.start();
+
+  app.use(express.static(path.join(__dirname, "public")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public", "index.html"));
+  });
+
   server.applyMiddleware({ app });
 }
 
