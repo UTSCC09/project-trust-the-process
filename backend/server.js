@@ -5,10 +5,11 @@ const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
-const express = require("express");
-const app = require("express")();
 const cors = require('cors');
 const path = require("path");
+const express = require("express");
+
+const app = express();
 
 app.use(cors({origin: '*'}));
 

@@ -1,11 +1,11 @@
-// Credit: https://github.com/yining1023/teachable-machine-p5/blob/master/poseclassifier/poseclassifier-on-webcam/sketch.js
+// REFERENCE: https://github.com/yining1023/teachable-machine-p5/blob/master/poseclassifier/poseclassifier-on-webcam/sketch.js
 
 import { useEffect, useState } from "react";
 import Sketch from 'react-p5';
 import { Button, Container } from '@mui/material';
 import Data from "./data";
 import { makeStyles } from '@mui/styles'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 import { useMutation, gql } from '@apollo/client';
 
 import Listening from "./listening";

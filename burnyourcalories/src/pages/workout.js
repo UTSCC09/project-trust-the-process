@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import SignInUp from '../components/signinup';
-import {
-	Container, Typography,
-} from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { Container } from '@mui/material';
 import Video from '../components/video';
 import LiveStatistic from '../components/liveStatistics';
 import NavBar from '../components/navbar';

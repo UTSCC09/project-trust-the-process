@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import {
@@ -9,7 +8,6 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';

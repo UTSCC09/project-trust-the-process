@@ -1,22 +1,13 @@
-import React, { useState } from 'react'
-import { Paper, InputBase, IconButton } from '@mui/material'
-import { Search } from '@mui/icons-material'
+import React from 'react'
 import { makeStyles } from '@mui/styles'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 import NavBar from '../components/navbar'
 import FlashCard from '../components/flashcard'
 import reportImg from '../assets/reports.jpg'
 import workoutImg from '../assets/workout.jpg'
 import {
 	Container,
-	Box,
-	Grid,
-	Typography,
-	Modal,
-	Backdrop,
-	Fade,
-	Snackbar,
-	SnackbarContent,
+	Typography
 } from '@mui/material'
 
 const theme = createTheme();

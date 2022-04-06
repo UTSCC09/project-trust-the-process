@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@mui/styles'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 import {
 	Container,
 	Box,
     Alert,
-    Typography,
-    Modal,
-    ButtonGroup,
-    Button,
+    Modal
 } from '@mui/material'
 import ReportCalendar from '../components/reportCalendar'
 import NavBar from '../components/navbar'
@@ -16,7 +13,6 @@ import DisplayReports from '../components/displayReports'
 import ReportViz from '../components/reportViz'
 import {
     useMutation,
-    useQuery,
     gql
 } from '@apollo/client'
 
