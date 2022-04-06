@@ -37,7 +37,7 @@ const startServer = async() => {
 
 startServer();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 const dbURI = process.env.MONGODB_URI;
 
 mongoose.connect(dbURI, {useUnifiedTopology: true, useNewUrlParser: true}, err => {
