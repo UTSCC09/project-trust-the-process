@@ -1,5 +1,5 @@
 {
     "scripts": {
-        "start": "npm install --prefix ./backend"
+        "start": "concurrently \"cd burnyourcalories && npm install && npm run build \" \"cd backend && npm run start\"" 
       }
 }
