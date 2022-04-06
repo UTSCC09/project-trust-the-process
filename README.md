@@ -41,7 +41,11 @@ We monitor our app on Heroku using the Heroku application logs section.
 **Task:** Describe the contribution of each team member to the project. Please provide the full name of each team member (but no student number).
 
 ### Steven Hans Limantoro
-
+1. Backend server setup
+2. Sign up and sign in (backend)
+3. Webcam, video recognition, speech recognition, data visualization for report (frontend)
+4. Integration between video (frontend) and report (backend) 
+5. Machine learning model training 
 
 
 ### Prashanth Ketheeswaran
