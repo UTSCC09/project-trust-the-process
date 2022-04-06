@@ -45,7 +45,12 @@ We monitor our app on Heroku using the Heroku application logs section.
 
 
 ### Prashanth Ketheeswaran
-
+1. Designed and implemented frontend portion of Signin and Signup
+2. Designed and implemented Dashboard
+3. Designed and implemented Navbar that allows user to go to Dashboard or Signout
+4. Added React Router and Auth (to be able to access pages only once signed in) to web application
+5. Designed and implemented Reports page, including interactions with calendar and list of reports
+6. Combined and organized components built by group members for Workout page
 
 
 ### Vignesh Nanthakumar
