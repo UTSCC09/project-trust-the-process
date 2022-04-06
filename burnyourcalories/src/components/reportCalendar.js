@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { makeStyles } from '@mui/styles'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 import {
 	Badge,
 	TextField,
@@ -15,10 +15,8 @@ import {
     CalendarPickerSkeleton,
 } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import getDaysInMonth from 'date-fns/getDaysInMonth'
 import {
     useMutation,
-    useQuery,
     gql
 } from '@apollo/client'
 
