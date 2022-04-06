@@ -1,1 +1,1 @@
-web: cd backend ; npm install ; npm run start
+web: cd burnyourcalories ; npm run build ; cd .. ; cd backend ; npm install ; npm run start
