@@ -19,7 +19,6 @@ const ADD_EXERCISE = gql`
 let order = 1;
 
 const PopulateReport = ({exercises, reportId}) => {
-    console.log(reportId);
     const [addExercise] = useMutation(ADD_EXERCISE, {
         onCompleted: (data) => {
             return data;
