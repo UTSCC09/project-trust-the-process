@@ -64,8 +64,6 @@ module.exports = {
 
         loginUser: async (_, {email, password}) => {
             try {
-                console.log("login 1");
-
                 if(!validator.isEmail(email) || !password) {
                     return {
                         __typename: "UserFail",
@@ -80,8 +78,6 @@ module.exports = {
                 password = validator.escape(password);
                 password = validator.trim(password);
 
-                console.log("login 2");
-
                 const user = await User.findOne({email: email});
                 if(!user) {
                     return {
@@ -90,8 +86,6 @@ module.exports = {
                         statusCode: 404
                     };
                 }
-                
-                console.log("login 3");
 
                 const checkPassMatch = await bcrypt.compare(password, user.password);
                 if(!checkPassMatch) {

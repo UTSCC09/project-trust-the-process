@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-
 const { ApolloServer} = require('apollo-server-express');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
@@ -20,7 +19,6 @@ const startServer = async() => {
     resolvers,
     context: ({ req }) => {
       const token = req.headers.authorization || '';
-      console.log("in context");
       if (token) {
         try {
           const user = jwt.verify(token, "burnYourCalories");
@@ -50,7 +48,6 @@ startServer();
 
 const port = process.env.PORT || 5000;
 const dbURI = process.env.MONGODB_URI;
-console.log(dbURI);
 
 mongoose.connect(dbURI, {useUnifiedTopology: true, useNewUrlParser: true}, err => {
   if (err){
