@@ -1,0 +1,6 @@
+{
+    "scripts": {
+      "start": "cd backend && npm run start",
+      "postinstall": "npm install --prefix ./backend && cd burnyourcalories && npm install && npm run build"
+      }
+}
