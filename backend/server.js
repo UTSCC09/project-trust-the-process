@@ -34,12 +34,18 @@ const startServer = async() => {
     }
   });
   await server.start();
+
+  app.use(express.static(__dirname + "public"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public", "index.html"));
+  });
+
   server.applyMiddleware({ app });
 }
 
 startServer();
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 const dbURI = process.env.MONGODB_URI;
 console.log(dbURI);
 
