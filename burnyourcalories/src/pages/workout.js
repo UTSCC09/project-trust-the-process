@@ -62,7 +62,6 @@ export default function Workout({
 				<LiveStatistic exercises={exercises} totalDuration={totalDuration}/>
 				<PopulateReport exercises={exercises} reportId={reportId} />
 			</Container>
-			{/* <LiveStatistic exercises={[{exerciseName: "squat", duration: 100}, {exerciseName: "pushup", duration: 50}]} totalDuration={totalDuration}/> */}
         </Container>
 	)
 }
