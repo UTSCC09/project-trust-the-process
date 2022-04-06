@@ -285,17 +285,6 @@ export default function SignInUp({
                   />
                 )
               }
-              {/* <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={email}
-                onChange={ e => setEmail(e.target.value) }
-                variant='outlined'
-                id="email"
-                label="Email"
-                name="email"
-              /> */}
               <TextField
                 margin="normal"
                 required

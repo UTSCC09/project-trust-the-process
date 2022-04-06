@@ -37,13 +37,6 @@ const PopulateReport = ({exercises, reportId}) => {
 
             await addExercise({variables: {reportId, exerciseName, duration, order}});
             order += 1;
-          
-            /*
-            addExercise({variables: {reportId, exerciseName, duration, order}}).then((res) => {
-              console.log(res);
-              order += 1;
-            });
-            */
         }
     }, [exercises])
 
