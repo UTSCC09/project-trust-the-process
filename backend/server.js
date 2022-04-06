@@ -51,6 +51,7 @@ const dbName = process.env.DB_NAME;
 
 const dbURI = process.env.MONGODB_URI;
 console.log(dbURI);
+console.log(username);
 
 console.log("server 4");
 
