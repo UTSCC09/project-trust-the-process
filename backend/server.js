@@ -53,6 +53,11 @@ const dbURI = process.env.MONGODB_URI;
 console.log(dbURI);
 console.log(username);
 
+const hello = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@burnyourcalories.s52wk.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+console.log(hello);
+console.log(process.env.URL);
+
+
 console.log("server 4");
 
 
