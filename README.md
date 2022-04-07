@@ -29,7 +29,7 @@ We monitor our app on Heroku using the Heroku Metrics section. This section disp
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
 1. Video and Speech recognition challenge
-2. Reports page challenge
+2. Creating a functional, interactive and seemless reports page, that shows what dates users have reports for in the calendar and then being able to generate the reports for a day when selected/inputted on the calendar itself
 3. Deployment challenge
 
 ## Contributions
