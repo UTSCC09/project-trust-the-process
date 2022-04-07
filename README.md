@@ -10,7 +10,7 @@ https://burnyourcalories.herokuapp.com
 
 ## Project Description
 
-**Task:** Provide a detailed description of your app
+We created a virtual fitness application to accompany users in their workout activities. Users will be able to track the exercises they complete during their workout, and also view a detailed report of their workout diplayed by a visual stepped line graph. The web application was built using real time video streaming and computer vision to detect and classify specific types of exercises. The application then stores this data, so that it can generate a personal fitness report, which users can view in a gallery style reports page. 
 
 ## Development
 
