@@ -22,11 +22,15 @@ https://burnyourcalories.herokuapp.com
 
 We deployed our application on Heroku. (Add more here)
 
+
+
+
+
 ## Maintenance
 
 **Task:** Explain how you monitor your deployed app to make sure that everything is working as expected.
 
-We monitor our app on Heroku using the Heroku application logs section.
+We monitor our app on Heroku using the Heroku Metrics section. This section displays specific analytics over the past 24 hours, such as memory usage and response time. The memory usage metric shows us how much memory the application uses at every minute over the last 24 hours. If the memory usage remains non-zero throughout the 24 hour period, this shows us that the application did not crash. The response time metric shows us every time a user visited the application in the last 24 hours.
 
 ## Challenges
 
@@ -47,7 +51,6 @@ We monitor our app on Heroku using the Heroku application logs section.
 4. Integration between video (frontend) and report (backend) 
 5. Machine learning model training 
 
-
 ### Prashanth Ketheeswaran
 1. Designed and implemented frontend portion of Signin and Signup
 2. Designed and implemented Dashboard
@@ -55,7 +58,6 @@ We monitor our app on Heroku using the Heroku application logs section.
 4. Added React Router and Auth (to be able to access pages only once signed in) to web application
 5. Designed and implemented Reports page, including interactions with calendar and list of reports
 6. Combined and organized components built by group members for Workout page
-
 
 ### Vignesh Nanthakumar
 1. Designed and implemented MongoDB mongoose models for User, Report, and Exercise
