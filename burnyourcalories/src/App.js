@@ -17,7 +17,7 @@ import Dashboard from './pages/dashboard';
 import Reports from './pages/reports';
 
 const httpLink = new HttpLink({
-  uri: '/graphql',
+  uri: 'http://localhost:3001/graphql',
 });
 
 // REFERENCE: https://www.apollographql.com/docs/react/networking/authentication/
