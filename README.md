@@ -26,11 +26,11 @@ We monitor our app on Heroku using the Heroku Metrics section. This section disp
 
 ## Challenges
 
-**Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
-
 1. Understanding how the HTMLMediaElement works and how to utilize it to set up the webcam for our project. Furthermore, since we have decided to use NPM packages for setting up the webcam and speech recognition, we have faced several issues in getting the components to work as intended due to the lack of documentation. 
+
 2. Creating a functional, interactive and seemless reports page, that shows what dates users have reports for in the calendar and then being able to generate the reports for a day when selected/inputted on the calendar itself. Dealing with passing around information between different levels of components and making sure this caused no delays in rendering made this task faily challenging yet rewarding, as it helped build our understanding about DOM and React.
-3. Deployment challenge
+
+3. Deploying our application on Heroku was challenging as all 3 of us had no experience with web application deployment, and we also had fears that our video and speech recognition would suffer performance drop offs over a public server. To serve our frontend statically to the backend we were required to integrate express into our Apollo server. This forced us to migrate our Apollo server from apollo-server to apollo-server-express.
 
 ## Contributions
 
