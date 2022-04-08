@@ -28,7 +28,7 @@ We monitor our app on Heroku using the Heroku Metrics section. This section disp
 
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
-1. Video and Speech recognition challenge
+1. Understanding how the HTMLMediaElement works and how to utilize it to set up the webcam for our project. Furthermore, since we have decided to use NPM packages for setting up the webcam and speech recognition, we have faced several issues in getting the components to work as intended due to the lack of documentation. 
 2. Creating a functional, interactive and seemless reports page, that shows what dates users have reports for in the calendar and then being able to generate the reports for a day when selected/inputted on the calendar itself. Dealing with passing around information between different levels of components and making sure this caused no delays in rendering made this task faily challenging yet rewarding, as it helped build our understanding about DOM and React.
 3. Deployment challenge
 
@@ -60,3 +60,4 @@ We monitor our app on Heroku using the Heroku Metrics section. This section disp
 # One more thing? 
 
 **Task:** Any additional comment you want to share with the course staff? 
+You can start the workout session / webcam by saying "Start" and you can stop it by saying "Stop"
