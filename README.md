@@ -55,7 +55,7 @@ We monitor our app on Heroku using the Heroku Metrics section. This section disp
 
 ### Vignesh Nanthakumar
 1. Designed and implemented MongoDB mongoose models for User, Report, and Exercise
-2. Designed and implemented the backend GraphQL API for creating and reading workout reports (7 GraphQL mutations, reports schema, and exercises schema)
+2. Designed and implemented the backend GraphQL API for creating and reading workout reports (reports and exercises)
 3. Implemented JWT authentification and input validation/sanitization for backend security
 4. Designed and implemented the Live Statistics React component for the Workout page
 5. Deployed project on Heroku
