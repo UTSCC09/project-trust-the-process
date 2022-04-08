@@ -34,6 +34,13 @@ const startServer = async() => {
     }
   });
   await server.start();
+
+  // REFERENCE: https://www.youtube.com/watch?v=ok6bu-3XRA8 , Traversy Media Apollo GraphQL Heroku Deployment Tutorial
+  app.use(express.static(path.join(__dirname, "public")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public", "index.html"));
+  });
+
   server.applyMiddleware({ app });
 }
 
