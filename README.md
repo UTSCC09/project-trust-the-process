@@ -14,7 +14,11 @@ We created a virtual fitness application to accompany users in their workout act
 
 ## Development
 
-**Task:** Leaving deployment aside, explain how the app is built. Please describe the overall code design and be specific about the programming languages, framework, libraries and third-party api that you have used. 
+The frontend is built with React and Material-UI. We modularized our frontend by splitting each page into React components, allowing for scalability and easier code maintenance. We used Material-UI for easier styling, and library components such as calendars and buttons. The workout page utilized a webcam feed and audio detection to record a user's workout, so we integrated the built in JavaScript webcam API and a React library for speech recognition. For the computer vision exercise classification we used a third party Google Pose Detection machine learning model, and deployed on Google Teachable Machine. In our reports page we used an extened React library called Victory for data visualization. This allowed us to generate a stepped line graph for each report. The frontend uses Apollo client to make requests to the backend GraphQL API and sends a JWT token that is stored in localStorage as a header for authentification.
+
+The backend is a GraphQL API built with Node.js, Express.js, and Apollo. It consists of 3 schemas, users, exercises, and reports. The users schema includes 2 GraphQL mutations for register and login. The exercises schema includes 2 GraphQL mutations for adding an exercise and getting an exercise. The reports schema includes 5 GraphQl mutations, 2 are used when creating a report from the frontend workout page, and the other 3 are used when reading and displaying reports in the frontend reports page. The reason we have 3 GraphQL mutations for our reports display, is so that we can use lazy loading to improve server performance and save reources. The backend authenticates requests with JWT, to ensure that requests are being made purely from the app.
+
+The backend communicates with a MongoDB database, that consists of 3 different models(Object Types), user, report, and exercise. Each object type has a field that references the Id of another object type, allowing our NoSQL database to have relations between all 3 models. For example, a Report object has a userId field that allows a report to belong to a User, and it also has an exercises array that has a list of exerciseIds that belong to the Report.
 
 ## Deployment
 
@@ -59,5 +63,4 @@ We monitor our app on Heroku using the Heroku Metrics section. This section disp
 
 # One more thing? 
 
-**Task:** Any additional comment you want to share with the course staff? 
 You can start the workout session / webcam by saying "Start" and you can stop it by saying "Stop"
