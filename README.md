@@ -6,7 +6,7 @@ https://burnyourcalories.herokuapp.com
 
 ## Project Video URL
 
-**Task:** Provide the link to your youtube video. Please make sure the link works. 
+https://www.youtube.com/watch?v=FV3QHuyrx80
 
 ## Project Description
 
